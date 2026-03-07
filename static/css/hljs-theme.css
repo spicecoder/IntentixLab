@@ -1,0 +1,26 @@
+.hljs { color: #c9d1d9; background: #0d1117; }
+.hljs-keyword { color: #ff7b72; font-weight: 500; }
+.hljs-built_in { color: #ffa657; }
+.hljs-type { color: #ffa657; }
+.hljs-literal { color: #79c0ff; }
+.hljs-number { color: #79c0ff; }
+.hljs-string { color: #a5d6ff; }
+.hljs-regexp { color: #a5d6ff; }
+.hljs-symbol { color: #79c0ff; }
+.hljs-variable { color: #ffa657; }
+.hljs-template-variable { color: #ffa657; }
+.hljs-link { color: #a5d6ff; }
+.hljs-selector-class { color: #d2a8ff; }
+.hljs-title { color: #d2a8ff; font-weight: 500; }
+.hljs-title.function_ { color: #d2a8ff; }
+.hljs-title.class_ { color: #ffa657; }
+.hljs-comment { color: #8b949e; font-style: italic; }
+.hljs-doctag { color: #8b949e; }
+.hljs-meta { color: #79c0ff; }
+.hljs-attr { color: #79c0ff; }
+.hljs-attribute { color: #79c0ff; }
+.hljs-params { color: #c9d1d9; }
+.hljs-punctuation { color: #c9d1d9; }
+.hljs-property { color: #79c0ff; }
+.hljs-addition { color: #aff5b4; background: rgba(46, 160, 67, 0.15); }
+.hljs-deletion { color: #ffdcd7; background: rgba(248, 81, 73, 0.15); }

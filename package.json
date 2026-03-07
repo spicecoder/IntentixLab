@@ -1,0 +1,17 @@
+{
+  "name": "intention-space-site",
+  "version": "1.0.0",
+  "description": "Static site generator for Intention Space research",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "clean": "rm -rf dist",
+    "rebuild": "npm run clean && npm run build",
+    "serve": "npx serve dist -p 3000"
+  },
+  "dependencies": {
+    "marked": "^12.0.0",
+    "highlight.js": "^11.9.0",
+    "gray-matter": "^4.0.3",
+    "glob": "^10.3.0"
+  }
+}
