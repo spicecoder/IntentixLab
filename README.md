@@ -185,7 +185,7 @@ Edit the `CONFIG` object at the top of `scripts/build.js`:
 ```javascript
 const CONFIG = {
   siteTitle: 'Intention Space',
-  siteTagline: 'Cognitive Execution Paths Without Hidden Logic',
+  siteTagline: 'Cognitive Execution Paths For Perceptive Apps ,Without Hidden Logic',
   baseUrl: '/',
 };
 ```
