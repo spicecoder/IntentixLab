@@ -5,5 +5,5 @@ These concepts explain how intentions are represented, structured, and executed.
 
 ## Topics
 
-- [Pulses](./foundations/pulses.html)
-- [Design Nodes](./foundations/design-nodes.html)
+- [Pulses](./pulses.html)
+- [Design Nodes](./design-nodes.html)

@@ -5,4 +5,4 @@ Scientific ideas and deeper theoretical work behind the framework.
 ## Topics
 
 
-- [Dual Process Computation](./research/dual-process.html)
+- [Dual Process Computation](./dual-process.html)

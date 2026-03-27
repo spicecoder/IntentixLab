@@ -5,4 +5,4 @@ Utilities and practical tools built around the framework.
 ## Topics
 
 
-- [Quick Start](./tutorials/dquick-start.html)
+- [Quick Start](./dquick-start.html)
