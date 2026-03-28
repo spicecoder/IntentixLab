@@ -128,6 +128,49 @@ The Unknown state is not a deficiency or a temporary condition awaiting resoluti
 
 This reframes transcendence itself: it is not a property that certain numbers happen to have. It is **the mathematical expression of the fact that identity is a limit, not a destination**. Any system rich enough to approach its own identity will find that the approach is infinite — and the constants that govern that approach must themselves carry that infinitude in their structure. They *cannot* be algebraic because they *measure* the gap that can never close.
 
+### The Directionality of Transcendence
+
+A consistency check sharpens the thesis. One can construct transcendental numbers by following trivially simple rules — Liouville placed 1s at factorial positions, Champernowne concatenated all integers. Both are transcendental, yet neither arises from self-reference, from a quantity equalling its own rate of change, or from structural self-return. They are transcendental by *construction*, not by *necessity*.
+
+This means the relationship between identity-seeking and transcendence is **one-directional**:
+
+> **Identity-seeking → transcendence** (always)
+> **Transcendence → identity-seeking** (not necessarily)
+
+When a system approaches its own identity, the result *must* be transcendental because the approach is necessarily infinite. But transcendence can also arise from processes that have nothing to do with identity — just as heat can come from friction or from combustion. The heat doesn't tell you the source, but combustion always produces heat.
+
+This is consistent with the thesis because the claim was never that all transcendence comes from identity. The claim is that identity-seeking *produces* transcendence as a necessary byproduct.
+
+### A Taxonomy of Transcendence
+
+The consistency check reveals that transcendental numbers are not a uniform class. There may be a meaningful partition based on the *source* of their unreachability:
+
+**Mechanical transcendentals** — transcendental because a rule generates infinite non-algebraic output, but the rule itself has no self-referential character. Liouville's number, Champernowne's constant. The rule can be written down finitely. The number is transcendental but the *process that generates it* is algebraically describable. Anyone can follow the rule; no identity is being sought.
+
+**Identity transcendentals** — transcendental because the quantity they measure involves a system relating to itself. **e** (rate of change equals value), **π** (structural self-return), **e^π** (analytic identity raised to the power of geometric identity). The process that generates them *cannot* be algebraically described because the self-reference prevents closure. The transcendence here is not incidental — it is forced by the structure of the question being asked.
+
+**Limit transcendentals** — transcendental because they measure a property of a self-referential system that the system itself cannot compute. Chaitin's **Ω** (the probability that a random program halts) is the canonical example: not only transcendental but *uncomputable*. The observer-observed gap here is absolute — the system cannot even approximate its own identity, let alone reach it.
+
+The gradient is suggestive:
+
+| Class | Self-referential? | Computable? | Example |
+|---|---|---|---|
+| **Mechanical** | No | Yes | Liouville, Champernowne |
+| **Identity** | Yes | Yes | e, π, e^π |
+| **Limit** | Yes | No | Chaitin's Ω |
+
+Mechanical transcendentals are computable and non-self-referential. Identity transcendentals are computable but arise from self-referential definitions. Limit transcendentals are the extreme case where self-reference reaches uncomputability.
+
+### Implications for the Domain of Identity
+
+This taxonomy has two consequences for the thesis:
+
+First, it **refines** the claim. The Domain of Identity does not govern all transcendence — only the transcendence that arises from self-reference. The identity constants (**e**, **π**) belong to a specific *kind* of transcendence, one whose source is the observer-observed gap rather than mere mechanical construction. The thesis predicts that any future constant arising from a genuinely self-referential process will also be transcendental.
+
+Second, it **raises a new question**: is the boundary between identity transcendentals and limit transcendentals sharp? **e** and **π** are computable — we can approximate them to arbitrary precision. Chaitin's **Ω** is not. Yet both arise from self-reference. What determines whether a self-referential process produces a computable or uncomputable transcendental? In CPUX terms: when does the Unknown state eventually resolve (computable identity transcendental) versus persist indefinitely (uncomputable limit transcendental)? The answer may depend on whether the self-reference in the CPUX mesh is *bounded* (finite cycle returning to origin) or *unbounded* (infinite regress of sub-intentions).
+
+This connects to a seventh testable direction added below.
+
 ## Testable Directions
 
 These ideas are speculative, but they suggest concrete lines of investigation:
@@ -143,6 +186,8 @@ These ideas are speculative, but they suggest concrete lines of investigation:
 5. **Explore curvature in Intention Space.** In non-Euclidean geometry, the circumference-to-diameter ratio deviates from **π**. If Intention Space's natural geometry is non-Euclidean (which is plausible given the hierarchical structure of CPUX meshes), its cyclic invariant would differ from the flat-space **π**. This would provide independent evidence that **π** is a projection rather than a fundamental.
 
 6. **Characterise the persistence of Unknown.** In a CPUX system with a resolution metric, measure the proportion of intention states in the Unknown pulse at any given step. If the transcendence-as-identity-limit thesis holds, this proportion should never reach zero in any sufficiently complex system — and its asymptotic behaviour may exhibit invariants related to the convergence rates of **e** and **π** series. Compare with Chaitin's Ω, which encodes the same kind of self-referential uncomputability.
+
+7. **Bounded vs. unbounded self-reference.** Investigate whether the computability of an identity transcendental corresponds to the boundedness of its CPUX mesh. Hypothesis: self-referential CPUX meshes with finite cycles (I → DN → ... → I in finitely many steps) produce computable identity transcendentals (analogues of **e** and **π**), while meshes with unbounded sub-intention regress produce uncomputable limit transcendentals (analogues of **Ω**). If confirmed, this would give CPUX a formal criterion for distinguishing the classes of transcendence from within Intention Space.
 
 ## Philosophical Implications
 
@@ -165,10 +210,11 @@ This note is a signpost, not a proof. The conjectures above are informal and may
 3. Measure the invariants that emerge.
 4. Compare formally with **e**, **π**, and **i**.
 5. Characterise the persistence of Unknown as a function of system complexity.
-6. If any structural correspondence survives steps 1–5, formalise via category theory.
+6. Investigate bounded vs. unbounded self-reference as a predictor of computability.
+7. If structural correspondences survive steps 1–6, formalise via category theory.
 
 The question is larger than number theory. It is a question about whether the concept of identity — the notion of returning to oneself through transformation — has its own domain, its own invariants, and its own constants. And whether Intention Space is the right language to express it.
 
 ---
 
-*This is exploratory work in progress. The author welcomes rigorous challenges, counterexamples, and connections to existing formalisms (fixed-point theory, topological dynamics, process algebra) that may confirm, refute, or subsume the intuitions expressed here.*
+*This is exploratory work in progress. The author welcomes rigorous challenges, counterexamples, and connections to existing formalisms (fixed-point theory, topological dynamics, process algebra, computability theory) that may confirm, refute, or subsume the intuitions expressed here.*
