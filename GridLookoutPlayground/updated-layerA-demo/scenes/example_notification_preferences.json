@@ -1,0 +1,51 @@
+{
+  "schemaName": "GridLookout",
+  "schemaVersion": "1.2",
+  "cells": [
+    {
+      "cellId": "cell_notification_pref",
+      "pulsePhrase": "notification_preferences",
+      "tv": "UN",
+      "responseConvention": { "version": "1.1", "mode": "structured" },
+      "response": [
+        ["META", "email_alerts", "sms_alerts", "push_alerts"],
+        ["true", "false", "true"]
+      ],
+      "visual": {
+        "viewport": { "rows": 10, "columns": 12 },
+        "layer": 1,
+        "position": { "startCell": [2, 2], "span": [4, 5] },
+        "inputMethod": "display"
+      },
+      "render": {
+        "headMode": "explicit",
+        "headText": "Notification Preferences",
+        "bodyMode": "responsePulseFields"
+      },
+      "PulseFieldViewport": { "rows": 6, "columns": 6 },
+      "PulseFieldRender": {
+        "email_alerts": {
+          "type": "act",
+          "actKind": "radio",
+          "label": "Email alerts",
+          "position": { "startCell": [1, 1], "span": [1, 6] },
+          "binding": { "actionIntentionId": "I_toggle_email_alerts" }
+        },
+        "sms_alerts": {
+          "type": "act",
+          "actKind": "radio",
+          "label": "SMS alerts",
+          "position": { "startCell": [2, 1], "span": [1, 6] },
+          "binding": { "actionIntentionId": "I_toggle_sms_alerts" }
+        },
+        "push_alerts": {
+          "type": "act",
+          "actKind": "toggle",
+          "label": "Push alerts",
+          "position": { "startCell": [3, 1], "span": [1, 6] },
+          "binding": { "actionIntentionId": "I_toggle_push_alerts" }
+        }
+      }
+    }
+  ]
+}

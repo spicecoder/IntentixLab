@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GridLookout Layer A Playground</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="toolbar">
+      <div class="title-wrap">
+        <h1>GridLookout Layer A Playground</h1>
+        <div class="subtitle">Edit scene JSON and render Pulse / PulseField CGP directly in the browser.</div>
+      </div>
+      <div class="controls">
+        <label>
+          Scene
+          <select id="sceneSelect">
+            <option value="example_bank_account_form.json">Bank form</option>
+            <option value="example_notification_preferences.json">Notification preferences</option>
+            <option value="example_order_actions.json">Order actions</option>
+          </select>
+        </label>
+        <button id="loadBtn">Load Example</button>
+        <button id="renderBtn">Render JSON</button>
+        <button id="resetBtn">Reset</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="panel">
+        <h2>Scene JSON</h2>
+        <textarea id="jsonEditor" spellcheck="false"></textarea>
+      </section>
+
+      <section class="panel">
+        <h2>Rendered View</h2>
+        <div id="renderPane" class="render-pane"></div>
+      </section>
+    </main>
+
+    <section class="panel debug-panel">
+      <h2>Debug</h2>
+      <pre id="debugPane">Ready.</pre>
+    </section>
+  </div>
+
+  <script src="gridlookout-engine.js"></script>
+  <script src="gridlookout-renderer.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

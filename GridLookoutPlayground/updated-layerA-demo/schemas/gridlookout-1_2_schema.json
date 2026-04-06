@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://intentixlab.com/schemas/gridlookout-1.2.schema.json",
+  "title": "GridLookout v1.2",
+  "type": "object",
+  "required": ["schemaName", "schemaVersion", "cells"],
+  "properties": {
+    "schemaName": { "type": "string", "const": "GridLookout" },
+    "schemaVersion": { "type": "string", "const": "1.2" },
+    "cells": { "type": "array" }
+  }
+}

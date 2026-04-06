@@ -1,0 +1,51 @@
+{
+  "schemaName": "GridLookout",
+  "schemaVersion": "1.2",
+  "cells": [
+    {
+      "cellId": "cell_order_toolbar",
+      "pulsePhrase": "order_actions",
+      "tv": "UN",
+      "responseConvention": { "version": "1.1", "mode": "structured" },
+      "response": [
+        ["META", "save", "submit", "cancel"],
+        ["save", "submit", "cancel"]
+      ],
+      "visual": {
+        "viewport": { "rows": 8, "columns": 12 },
+        "layer": 1,
+        "position": { "startCell": [6, 2], "span": [2, 8] },
+        "inputMethod": "display"
+      },
+      "render": {
+        "headMode": "explicit",
+        "headText": "Order Actions",
+        "bodyMode": "responsePulseFields"
+      },
+      "PulseFieldViewport": { "rows": 2, "columns": 12 },
+      "PulseFieldRender": {
+        "save": {
+          "type": "act",
+          "actKind": "button",
+          "label": "Save Draft",
+          "position": { "startCell": [1, 1], "span": [1, 4] },
+          "binding": { "actionIntentionId": "I_save_order" }
+        },
+        "submit": {
+          "type": "act",
+          "actKind": "button",
+          "label": "Submit Order",
+          "position": { "startCell": [1, 5], "span": [1, 4] },
+          "binding": { "actionIntentionId": "I_submit_order" }
+        },
+        "cancel": {
+          "type": "act",
+          "actKind": "option",
+          "label": "Cancel",
+          "position": { "startCell": [1, 9], "span": [1, 4] },
+          "binding": { "actionIntentionId": "I_cancel_order" }
+        }
+      }
+    }
+  ]
+}

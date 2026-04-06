@@ -1,0 +1,220 @@
+Good — that confirms the root cause cleanly:
+
+layout timing, not geometry, was the problem
+
+Your model holds.
+
+What just happened (important insight)
+
+Before:
+
+You computed rect using a transient stage width
+In side-by-side, grid hadn’t settled yet
+So rect was wrong → pulse went off / collapsed
+
+After moving into requestAnimationFrame:
+
+browser finishes layout
+stage.clientWidth is correct
+same CGP math now works as expected
+This is actually a key principle for your system
+
+You’ve implicitly discovered a rule for your engine:
+
+Geometry must always be computed after layout stabilizes
+
+That is part of your UI → CPUX contract
+
+Make this explicit (important for your framework)
+
+Instead of scattering requestAnimationFrame, encode the intent:
+
+Option A — wrap it
+function withStableLayout(fn) {
+  requestAnimationFrame(() => {
+    fn();
+  });
+}
+
+Then:
+
+renderPulse(stage, pulse) {
+  withStableLayout(() => {
+    // measure + render
+  });
+}
+Option B — even better (engine-level discipline)
+
+Separate phases:
+
+// Phase 1: layout ready
+// Phase 2: measure
+// Phase 3: project CGP → pixels
+// Phase 4: render
+
+Right now you were mixing:
+
+measure + render before layout stable
+
+Now you've aligned the phases.
+
+Why this matters for your “Perceptive UI” idea
+
+This is actually deep:
+
+Your canonical model is invariant (rows/cols, start/span)
+But projection into pixels is time-dependent
+
+So:
+
+CGP is stable
+Pixel projection is contextual (layout + time)
+
+That distinction is important to teach learners.
+
+Practical takeaway (for your team / learners)
+
+You can phrase it simply:
+
+“Always measure the container after the browser finishes layout.
+Otherwise your grid math is correct, but applied to the wrong size.”
+
+One small improvement (optional)
+
+Right now you still have:
+
+const stageWidth = stage.clientWidth || 800;
+
+You can make this stricter now:
+
+const stageWidth = stage.clientWidth;
+const stageHeight = stage.clientHeight;
+
+if (!stageWidth || !stageHeight) {
+  console.warn("Stage not ready for measurement");
+  return;
+}
+
+This prevents silent wrong rendering.
+
+Summary
+Your conceptual model is correct
+The bug was timing, not math
+You now have a stable render pipeline
+This becomes a foundational rule in your system design
+
+If you want next step: we can apply the same discipline to pickup projection, which will remove a whole class of subtle bugs there too.
+
+If the body content does not need rebuilding on every resize, use this:
+
+renderPulse(stage, pulse) {
+  const pulseEl = document.createElement("div");
+  pulseEl.className = "gl-pulse";
+  pulseEl.style.position = "absolute";
+  pulseEl.style.zIndex = String(pulse.visual.layer || 1);
+  applyStyle(pulseEl, pulse.style);
+
+  const head = document.createElement("div");
+  head.className = "gl-pulse-head";
+  head.textContent =
+    pulse.render && pulse.render.headMode === "explicit"
+      ? (pulse.render.headText || pulse.pulsePhrase)
+      : pulse.pulsePhrase;
+
+  const body = document.createElement("div");
+  body.className = "gl-pulse-body";
+
+  pulseEl.appendChild(head);
+  pulseEl.appendChild(body);
+  stage.appendChild(pulseEl);
+
+  const data = parseResponse(pulse);
+
+  if (pulse.PulseFieldViewport && pulse.PulseFieldRender) {
+    Object.entries(pulse.PulseFieldRender).forEach(([fieldName, spec]) => {
+      this.renderPulseField(
+        body,
+        pulse,
+        fieldName,
+        spec,
+        data[fieldName] ?? "",
+        stage
+      );
+    });
+  } else {
+    const fallback = document.createElement("div");
+    fallback.style.padding = "10px";
+    fallback.textContent = data._value ?? "";
+    body.appendChild(fallback);
+  }
+
+  const updateGeometry = (stageWidth, stageHeight) => {
+    const viewport = pulse.visual.viewport;
+
+    const rect = rectFromCGP(
+      viewport.rows,
+      viewport.columns,
+      pulse.visual.position.startCell,
+      pulse.visual.position.span,
+      stageWidth,
+      stageHeight
+    );
+
+    pulseEl.style.left = rect.x + "px";
+    pulseEl.style.top = rect.y + "px";
+    pulseEl.style.width = rect.width + "px";
+    pulseEl.style.height = rect.height + "px";
+  };
+
+  let lastWidth = 0;
+  let lastHeight = 0;
+
+  const observer = new ResizeObserver((entries) => {
+    for (const entry of entries) {
+      const width = Math.floor(entry.contentRect.width);
+      const height = Math.floor(entry.contentRect.height);
+
+      if (!width || !height) return;
+      if (width === lastWidth && height === lastHeight) return;
+
+      lastWidth = width;
+      lastHeight = height;
+      updateGeometry(width, height);
+    }
+  });
+
+  observer.observe(stage);
+
+  pulseEl.addEventListener("click", (e) => {
+    if (e.target.closest(".gl-field")) return;
+    const expanded = this.buildExpandedPulse(pulse);
+    stage.appendChild(createOverlay(expanded));
+  });
+
+  pulseEl._dispose = () => observer.disconnect();
+
+  return pulseEl;
+}
+Cleanup note
+
+If you rerender scenes often, make sure old observers are disconnected when pulses are removed:
+
+if (pulseEl._dispose) pulseEl._dispose();
+
+before deleting elements.
+
+Recommendation
+
+For your playground, I would start with the optimized version:
+
+render body once
+update geometry via ResizeObserver
+
+If you want, I can also give a small helper like observeStageAndPlacePulse(stage, pulse, pulseEl) so the geometry logic is reusable.
+
+we also need -Your conceptual model is correct
+The bug was timing, not math
+You now have a stable render pipeline
+This becomes a foundational rule in your system design
+
+: we can apply the same discipline to pickup projection, which will remove a whole class of subtle bugs there too
