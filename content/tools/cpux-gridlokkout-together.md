@@ -2,8 +2,7 @@ CPUX Framework Developer Guide
 Maintaining Integrity Between GridLookout and CPUX Engine
 1. Architecture Overview
 The Separation of Concerns
-plain
-Copy
+
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                         CLIENT BROWSER                                       │
@@ -34,8 +33,6 @@ Key Principle: GridLookout knows nothing about CPUX internals (ICs, DNs, FieldBo
 What is First Contact?
 First Contact is the bootstrap signal that transforms a "bare" GridLookout into a running Perceptive Application. It's the only moment when the backend pushes data to the client without a prior request.
 Protocol Flow
-plain
-Copy
 
 Step 1: Backend sends First Contact IPTP Signal
 ═══════════════════════════════════════════════════════════════════════════════
@@ -131,8 +128,7 @@ Holder (O_holder)	Accumulates input Pulses	The inbox
 Reflector (O_reflector)	Releases output Pulses	The outbox
 FieldBoard	The runtime environment managing all ICs	The factory floor
 IC Lifecycle
-plain
-Copy
+
 
 ┌─────────────┐     ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
 │   IDLE      │────▶│  QUEUED     │────▶│  RUNNING    │────▶│ COMPLETED   │
@@ -157,7 +153,7 @@ Important: The same cell click can behave differently based on mode. The mode is
 4. GridLookout Engine Responsibilities
 Cell Binding Structure
 JavaScript
-Copy
+
 
 // From shopping-cart-app.json cell definition
 {
@@ -192,7 +188,6 @@ All three must match for the update to apply to a cell.
 A. Manifest Processing (Fragile Area)
 The extractScene() function in gridlookout-engine.js handles three JSON shapes:
 JavaScript
-Copy
 
 function extractScene(obj) {
   if (obj.cells) return obj;                    // Direct scene
@@ -204,7 +199,7 @@ Maintenance Rule: If you change the app manifest structure, update this function
 B. DN Registry
 CPUX Engine maintains a registry of Design Nodes:
 JavaScript
-Copy
+
 
 // In cpux-engine.js
 registerDN('DN_cart', function(inputPulses, context) { ... });
