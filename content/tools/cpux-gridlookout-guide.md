@@ -43,11 +43,12 @@ description: Maintaining Integrity Between GridLookout and CPUX Engine
 
 ### What is First Contact?
 
-First Contact is the bootstrap signal that transforms a "bare" GridLookout into a running Perceptive Application. It's the only moment when the backend pushes data to the client without a prior request.
+First Contact is the bootstrap signal that transforms a "bare" GridLookout into a running Perceptive Application. It's the only moment when the backend pushes data to the client without a prior request from CPUX.
 
 ### Protocol Flow
 
 ```
+Syep 0: Gridlookout send a request for a CPUX. 
 Step 1: Backend sends First Contact IPTP Signal
 ═══════════════════════════════════════════════════════════════════════════════
 WebSocket: ws://localhost:4000 (Backend)
