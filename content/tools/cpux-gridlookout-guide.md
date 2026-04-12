@@ -60,7 +60,7 @@ Message Type: "first-contact" | "iptp:signal"
   "pulses": {
     "app_manifest": {
       "tv": "Y",
-      "responses": ["{...entire shopping-cart-app.json...}"]
+      "responses": ["{...entire shopping-cart-app.json...CPUX.}"]
     },
     "cpux_url": {
       "tv": "Y", 
