@@ -22,8 +22,8 @@ description: Maintaining Integrity Between GridLookout and CPUX Engine
 │  │  • Handles clicks   │        │  • Manages Field    │                    │
 │  │  • Displays state   │        │  • Executes DNs     │                    │
 │  └─────────────────────┘        └─────────────────────┘                    │
-│           ▲                              ▲                                  │
-│           │      First Contact (IPT)     │                                  │
+│           ▼                              ▲                                  │
+│           │      First Contact (IPTP)     │                                  │
 │           └──────────────────────────────┘                                  │
 │                         │                                                   │
 │                         ▼                                                   │
