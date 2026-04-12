@@ -145,3 +145,17 @@ body { font-family: var(--font-body); color: var(--text-primary); background: va
   .site-nav, .site-header, .site-footer, .nav-toggle, .nav-search { display: none !important; }
   .site-content { padding: 0; max-width: 100%; }
 }
+/* Force proper rendering for ASCII diagrams */
+pre code {
+  white-space: pre !important;
+  font-family: 'JetBrains Mono', 'Courier New', monospace !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0 !important;
+  word-spacing: 0 !important;
+  overflow-x: auto;
+}
+
+/* Prevent syntax highlighting from breaking ASCII art */
+pre code .hljs {
+  background: transparent;
+}
