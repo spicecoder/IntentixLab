@@ -6,4 +6,4 @@ Utilities and practical tools built around the framework.
 
 
 - [Entity-Extractor](./extractor-page.html)
-- [CPUX Developers Guide](./cpux-gridlookout-together.html)
+- [CPUX Developers Guide](./cpux-gridlookout-guide.html)
