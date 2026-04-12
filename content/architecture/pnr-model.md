@@ -32,3 +32,12 @@ This creates an audit trail where every computational step is traceable back to 
 ## Why This Matters
 
 When logic lives in data rather than code, systems become intrinsically debuggable. There are no hidden branches, no implicit state mutations, no "it works on my machine" surprises.
+
+## The Pulse
+
+In Intention Space the prompt and response together is called a Pulse . 
+
+A Pulse is defined as a phrase with trivalence and an optional Response area which can be treated as a CSV array ; Pulse : <'phrase',TV,R >, where TV can be 'Y'/'N'/'UN' ; the phrase  also acts as a unique semantic identity of the pulse in an Intention Space. 
+
+At run time two Pulses having the same phrase and TV value can only exist in two different semantic address
+

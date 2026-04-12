@@ -1,0 +1,44 @@
+{
+  "schemaName": "GridLookout",
+  "schemaVersion": "1.2",
+  "cells": [
+    {
+      "cellId": "cell_bank_account",
+      "pulsePhrase": "bank_account_details",
+      "tv": "UN",
+      "responseConvention": { "version": "1.1", "mode": "structured" },
+      "response": [
+        ["META", "bank_name", "account_number", "account_type"],
+        ["ABC Bank", "12345678999", "Savings"]
+      ],
+      "visual": {
+        "viewport": { "rows": 8, "columns": 12 },
+        "layer": 1,
+        "position": { "startCell": [1, 8], "span": [3, 5] },
+        "inputMethod": "display"
+      },
+      "render": {
+        "headMode": "pulsePhrase",
+        "bodyMode": "responsePulseFields"
+      },
+      "PulseFieldViewport": { "rows": 8, "columns": 6 },
+      "PulseFieldRender": {
+        "bank_name": {
+          "type": "show",
+          "position": { "startCell": [1, 1], "span": [2, 6] }
+        },
+        "account_number": {
+          "type": "input",
+          "position": { "startCell": [3, 1], "span": [2, 6] }
+        },
+        "account_type": {
+          "type": "act",
+          "actKind": "select",
+          "label": "Choose account type",
+          "position": { "startCell": [5, 1], "span": [2, 6] },
+          "binding": { "actionIntentionId": "I_select_account_type" }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GridLookout Pulse Studio</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <h1>GridLookout Pulse Studio</h1>
+        <p>Define PulseCells and PulseFields canonically, confirm perceptually, and keep geometry after stable layout.</p>
+      </div>
+      <div class="topbar-actions">
+        <label>
+          Example scene
+          <select id="sceneSelect">
+            <option value="example_bank_account_form.json">Bank form</option>
+          </select>
+        </label>
+        <button id="loadExampleBtn">Load example</button>
+        <button id="renderBtn">Render JSON</button>
+        <button id="toggleGuidesBtn">Toggle guides</button>
+      </div>
+    </header>
+
+    <nav class="mode-tabs" aria-label="Studio modes">
+      <button class="mode-tab is-active" data-tab="designerTab">PulseCell designer</button>
+      <button class="mode-tab" data-tab="fieldDesignerTab">PulseField designer</button>
+      <button class="mode-tab" data-tab="inspectorTab">Pulse inspector</button>
+      <button class="mode-tab" data-tab="sceneTab">Scene projection</button>
+      <button class="mode-tab" data-tab="pickupTab">Pickup projection</button>
+      <button class="mode-tab" data-tab="logTab">Event log</button>
+      <button class="mode-tab narrow-only" data-tab="jsonTab">Scene JSON</button>
+    </nav>
+
+    <main class="studio-layout">
+      <section class="panel json-column" id="jsonColumn">
+        <div class="panel-section fill-height">
+          <div class="panel-title-row">
+            <h2>Scene JSON</h2>
+            <button id="formatJsonBtn">Format</button>
+          </div>
+          <textarea id="jsonEditor" spellcheck="false"></textarea>
+        </div>
+      </section>
+
+      <section class="panel studio-workspace">
+        <section class="workspace-pane narrow-only" id="jsonTab">
+          <div class="panel-section fill-height" id="jsonTabMount"></div>
+        </section>
+
+        <section class="workspace-pane is-active" id="designerTab">
+          <div class="split-pane two-up">
+            <div class="panel-section">
+              <div class="panel-title-row">
+                <h2>PulseCell designer</h2>
+                <span class="projection-note">select a rectangle in the grid</span>
+              </div>
+              <div class="form-grid">
+                <label>Preview width (px)<input id="pcPreviewWidth" type="number" min="120" step="10" value="720"></label>
+                <label>Preview height (px)<input id="pcPreviewHeight" type="number" min="120" step="10" value="480"></label>
+                <label>Viewport rows<input id="pcRows" type="number" min="1" max="60" value="8"></label>
+                <label>Viewport columns<input id="pcCols" type="number" min="1" max="60" value="12"></label>
+                <label>Pulse phrase<input id="pcPhrase" type="text" value="bank_account_details"></label>
+                <label>Cell id<input id="pcCellId" type="text" value="cell_bank_account"></label>
+                <label>Layer<input id="pcLayer" type="number" min="1" value="1"></label>
+                <label>Head mode
+                  <select id="pcHeadMode">
+                    <option value="pulsePhrase">pulsePhrase</option>
+                    <option value="explicit">explicit</option>
+                  </select>
+                </label>
+                <label>Head text<input id="pcHeadText" type="text" value=""></label>
+                <label>Response mode
+                  <select id="pcResponseMode">
+                    <option value="structured">structured</option>
+                    <option value="simple">simple</option>
+                  </select>
+                </label>
+              </div>
+              <div class="button-row">
+                <button id="pcApplyGridBtn">Apply grid</button>
+                <button id="pcClearSelectionBtn">Clear selection</button>
+                <button class="primary" id="pcSaveCellBtn">Add / update PulseCell</button>
+                <button id="pcAddPickupBtn">Add to pickup</button>
+              </div>
+              <div class="result-box" id="pcSelectionSummary">No PulseCell selection yet.</div>
+              <div class="small-note">Accumulating PulseCells updates the canonical Scene JSON immediately. The pickup area is only a perceptive projection of those same canonical cells.</div>
+            </div>
+            <div class="panel-section fill-height">
+              <div class="panel-title-row"><h2>PulseCell grid</h2><span class="projection-note">Shift+click extends selection</span></div>
+              <div id="pcGridHost" class="designer-host"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="workspace-pane" id="fieldDesignerTab">
+          <div class="split-pane two-up">
+            <div class="panel-section">
+              <div class="panel-title-row">
+                <h2>PulseField designer</h2>
+                <span class="projection-note">works inside selected PulseCell</span>
+              </div>
+              <div class="form-grid">
+                <label>Target PulseCell<select id="pfPulseSelect"></select></label>
+                <label>Field viewport rows<input id="pfRows" type="number" min="1" max="60" value="8"></label>
+                <label>Field viewport columns<input id="pfCols" type="number" min="1" max="60" value="6"></label>
+                <label>Field name<input id="pfName" type="text" value="field_name"></label>
+                <label>Label<input id="pfLabel" type="text" value=""></label>
+                <label>Type
+                  <select id="pfType">
+                    <option value="show">show</option>
+                    <option value="input">input</option>
+                    <option value="act">act</option>
+                  </select>
+                </label>
+                <label>Act kind
+                  <select id="pfActKind">
+                    <option value="button">button</option>
+                    <option value="select">select</option>
+                    <option value="radio">radio</option>
+                    <option value="toggle">toggle</option>
+                    <option value="option">option</option>
+                  </select>
+                </label>
+                <label>Action intention id<input id="pfActionIntention" type="text" value=""></label>
+              </div>
+              <div class="button-row">
+                <button id="pfApplyGridBtn">Apply field grid</button>
+                <button id="pfClearSelectionBtn">Clear selection</button>
+                <button class="primary" id="pfSaveFieldBtn">Add / update PulseField</button>
+              </div>
+              <div class="result-box" id="pfSelectionSummary">Select a PulseCell first, then mark a PulseField rectangle.</div>
+              <div class="small-note">PulseField geometry also follows layout first, then geometry. The selected field updates the target cell's <code>PulseFieldViewport</code> and <code>PulseFieldRender</code>.</div>
+            </div>
+            <div class="panel-section fill-height">
+              <div class="panel-title-row"><h2>PulseField grid</h2><span class="projection-note">relative to selected pulse</span></div>
+              <div id="pfGridHost" class="designer-host"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="workspace-pane" id="inspectorTab">
+          <div class="panel-section fill-height">
+            <div class="panel-title-row"><h2>Pulse inspector</h2><span class="projection-note">scene + pickup + field details</span></div>
+            <div id="inspectorPane" class="inspector-empty">Select a PulseCell from Scene or Pickup.</div>
+          </div>
+        </section>
+
+        <section class="workspace-pane" id="sceneTab">
+          <div class="panel-section fill-height">
+            <div class="panel-title-row"><h2>Scene projection</h2><span class="projection-note">full scene</span></div>
+            <div id="sceneSurface" class="surface-host"></div>
+          </div>
+        </section>
+
+        <section class="workspace-pane" id="pickupTab">
+          <div class="split-pane pickup-layout">
+            <div class="panel-section fill-height">
+              <div class="panel-title-row"><h2>Pickup projection</h2><span class="projection-note">perception surface</span></div>
+              <div id="pickupSurface" class="surface-host pickup-surface"></div>
+            </div>
+            <div class="panel-section pickup-controls">
+              <div class="panel-title-row"><h2>Pickup controls</h2></div>
+              <label>Selected in pickup<select id="pickupPulseSelect"></select></label>
+              <div class="button-grid four">
+                <button id="pickupUpBtn">↑ Up</button>
+                <button id="pickupDownBtn">↓ Down</button>
+                <button id="pickupLeftBtn">← Left</button>
+                <button id="pickupRightBtn">→ Right</button>
+              </div>
+              <div class="button-row">
+                <button id="pickupRemoveBtn">Remove from pickup</button>
+                <button id="clearPickupBtn">Clear pickup</button>
+              </div>
+              <div class="small-note">Repositioning in pickup updates the same canonical <code>startCell</code> in Scene JSON. Pickup does not maintain a second geometry system.</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="workspace-pane" id="logTab">
+          <div class="panel-section fill-height">
+            <div class="panel-title-row"><h2>Event log</h2><span class="projection-note">stable layout first</span></div>
+            <pre id="eventLog" class="event-log">Ready.</pre>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script src="gridlookout-engine.js"></script>
+  <script src="gridlookout-renderer.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

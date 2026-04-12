@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GridLookout Pulse Studio Foundation</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <h1>GridLookout Pulse Studio</h1>
+        <p>One canonical PulseCell definition, multiple projections, one layout-first geometry discipline.</p>
+      </div>
+      <div class="topbar-actions">
+        <label>
+          Example scene
+          <select id="sceneSelect">
+            <option value="example_bank_account_form.json">Bank form</option>
+          </select>
+        </label>
+        <button id="loadExampleBtn">Load example</button>
+        <button id="renderBtn">Render JSON</button>
+        <button id="toggleGuidesBtn">Toggle guides</button>
+      </div>
+    </header>
+
+    <nav class="mode-tabs" aria-label="Studio modes">
+      <button class="mode-tab is-active" data-tab="jsonTab">Scene JSON</button>
+      <button class="mode-tab" data-tab="inspectorTab">Pulse inspector</button>
+      <button class="mode-tab" data-tab="sceneTab">Scene projection</button>
+      <button class="mode-tab" data-tab="pickupTab">Pickup projection</button>
+      <button class="mode-tab" data-tab="logTab">Event log</button>
+    </nav>
+
+    <main class="studio-layout">
+      <section class="panel json-column" id="jsonColumn">
+        <div class="panel-section fill-height">
+          <div class="panel-title-row">
+            <h2>Scene JSON</h2>
+            <button id="formatJsonBtn">Format</button>
+          </div>
+          <textarea id="jsonEditor" spellcheck="false"></textarea>
+        </div>
+      </section>
+
+      <section class="panel studio-workspace">
+        <section class="workspace-pane is-active" id="jsonTab">
+          <div class="panel-section compact-panel">
+            <div class="panel-title-row">
+              <h2>Scene JSON companion</h2>
+              <span class="projection-note">JSON remains visible at left on wide screens</span>
+            </div>
+            <div class="inspector-empty short-note">
+              Use this mode when the designer is shaping canonical JSON. On narrow screens the JSON editor becomes the primary tab content. On wide screens the editor stays fixed at left while this area can hold validation or geometry notes.
+            </div>
+          </div>
+        </section>
+
+        <section class="workspace-pane" id="inspectorTab">
+          <div class="panel-section fill-height">
+            <div class="panel-title-row">
+              <h2>Pulse inspector</h2>
+              <button id="addToPickupBtn">Add selected to pickup</button>
+            </div>
+            <div id="inspectorPane" class="inspector-empty">Select a PulseCell from Scene or Pickup.</div>
+          </div>
+        </section>
+
+        <section class="workspace-pane" id="sceneTab">
+          <div class="panel-section fill-height">
+            <div class="panel-title-row">
+              <h2>Scene projection</h2>
+              <span class="projection-note">runtime/editor projection</span>
+            </div>
+            <div id="sceneSurface" class="surface-host"></div>
+          </div>
+        </section>
+
+        <section class="workspace-pane" id="pickupTab">
+          <div class="panel-section fill-height">
+            <div class="panel-title-row">
+              <h2>Pickup projection</h2>
+              <div class="pickup-actions">
+                <button id="clearPickupBtn">Clear pickup</button>
+              </div>
+            </div>
+            <div id="pickupSurface" class="surface-host pickup-surface"></div>
+          </div>
+        </section>
+
+        <section class="workspace-pane" id="logTab">
+          <div class="panel-section fill-height">
+            <div class="panel-title-row">
+              <h2>Event log</h2>
+              <span class="projection-note">layout first, then geometry</span>
+            </div>
+            <pre id="eventLog" class="event-log">Ready.</pre>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script src="gridlookout-engine.js"></script>
+  <script src="gridlookout-renderer.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

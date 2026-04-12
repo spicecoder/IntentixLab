@@ -1,3 +1,10 @@
+A perceptive UI separates intent, placement, and perception.
+Each UI element is defined canonically in a grid,
+but can be projected differently depending on interaction context.
+Interaction does not navigate between screens —
+it changes the projection of the same element.
+
+
 Good — that confirms the root cause cleanly:
 
 layout timing, not geometry, was the problem
