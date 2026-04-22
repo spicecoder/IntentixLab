@@ -148,50 +148,10 @@ function renderNav(tree, activePath = '', depth = 0) {
 
 // ─── Process a Single Markdown File ──────────────────────────────
 
-/**
- * extractRawHtmlBlocks: Pull out any <div>...</div> blocks that contain
- * <svg>, <style>, or <script> tags before handing content to marked.
- * marked's HTML-block parser can be confused by nested <style> inside
- * SVG <defs>, causing the SVG to render as a raw code block instead of
- * an image. We replace each raw-HTML block with a unique placeholder,
- * let marked parse the rest of the markdown normally, then splice the
- * original HTML back in.
- */
-function extractRawHtmlBlocks(content) {
-  const blocks = [];
-
-  // Match outermost <div> wrappers that contain SVG, style, or script.
-  // The regex is intentionally non-greedy on the inner content so that
-  // adjacent diagrams are captured separately.
-  const protected_re = /(<div[\s\S]*?<(?:svg|style|script)[\s\S]*?<\/div>)/g;
-
-  const protected_content = content.replace(protected_re, (match) => {
-    const placeholder = `\n\nRAW_HTML_BLOCK_${blocks.length}\n\n`;
-    blocks.push(match);
-    return placeholder;
-  });
-
-  return { protected_content, blocks };
-}
-
 function processMarkdown(filePath) {
   const raw = fs.readFileSync(filePath, 'utf-8');
   const { data: frontmatter, content } = matter(raw);
-
-  // 1. Pull SVG / raw-HTML sections out before marked sees them.
-  const { protected_content, blocks } = extractRawHtmlBlocks(content);
-
-  // 2. Let marked parse the SVG-free markdown.
-  let htmlContent = marked.parse(protected_content);
-
-  // 3. Splice the raw HTML blocks back in, replacing the <p>PLACEHOLDER</p>
-  //    that marked will have wrapped around each placeholder line.
-  blocks.forEach((block, i) => {
-    htmlContent = htmlContent.replace(
-      new RegExp(`<p>RAW_HTML_BLOCK_${i}<\\/p>`, 'g'),
-      block
-    );
-  });
+  const htmlContent = marked.parse(content);
 
   const plainText = content
     .replace(/```[\s\S]*?```/g, '')
