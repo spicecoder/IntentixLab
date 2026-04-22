@@ -43,6 +43,54 @@ When using these prompts:
 
 `DN -> Intention/Signal -> Object -> Intention/Signal -> DN`
 
+## Important Scope Note — This is Requirement Discovery
+
+These prompts do not automatically produce a deployed intelligent system.
+
+They do not:
+- generate a complete smart system
+- guarantee Design Nodes are implementation-ready
+- replace engineering design
+- produce a finished CPUX runtime
+
+Their purpose is requirement discovery.
+
+They help identify:
+- candidate Pulses
+- candidate Design Nodes
+- candidate Intentions and Signals
+- candidate Objects
+- candidate CPUX execution paths
+
+Think of this as requirement gathering for possible CPUX execution paths.
+
+The outputs are exploratory requirements for later Intention Space design,
+not a completed operational architecture.
+## Three Levels
+
+Level 1 — Prompt Discovery
+Explore situational reality and discover candidate structures.
+
+Level 2 — Design
+Refine DNs, Objects, Signals and formal CPUX definitions fit for purpose.
+
+Level 3 — Execution
+Build and run an actual Intention Space system.
+
+## Human Review Required
+
+Candidate paths produced by an AI model are hypotheses.
+
+They may omit:
+- missing pulses
+- wrong DNs
+- incorrect grounding
+- weak intentions
+- unsuitable Objects
+
+Human review is expected before using them as design inputs.
+
+
 ---
 
 ## Prompt 0 — Describe the Situational Reality
