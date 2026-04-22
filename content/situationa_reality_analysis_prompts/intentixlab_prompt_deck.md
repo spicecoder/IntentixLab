@@ -1,7 +1,6 @@
 # Try Intention Space With Your Own Situation
 
-Use any AI model to explore a real situation through **Pulses, Design Nodes (DNs), Signals, Objects, and candidate CPUX paths**.
-
+Use any AI model to explore a real situation as requirement discovery for possible Pulses, Design Nodes, Signals, Objects, and candidate CPUX paths.
 This page gives a **prompt ladder** rather than one giant prompt, so people can inspect the structure step by step.
 
 ---
