@@ -279,6 +279,10 @@ For each likely communication step produce:
 
 Keep pulse identity distinct from response payload.
 Do not collapse price, names, or text into pulse meaning if avoidable.
+When useful, represent pulse responses using:
+- simple scalar response
+or
+- META structured response arrays.
 ```
 
 Example:
@@ -296,6 +300,22 @@ Example:
   "medium": "written_message",
   "possible_receiver": "municipality"
 }
+
+Signal:
+sale_arrangement
+
+Pulses:
+- for_sale:Y
+
+Response:
+[
+ ["META","price","currency","contact_mode"],
+ ["67","USD","in_person"]
+]
+
+Advanced users:
+See Response Array Convention for structured pulse responses.
+
 ```
 
 ---
