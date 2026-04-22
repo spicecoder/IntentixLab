@@ -1,7 +1,7 @@
 # From Data to Intent: Executable Semantics over Solid Pods
 
 *A demonstration of user-owned, executable intent over Solid Pods.*
-Github link -
+Github link - https://github.com/spicecoder/IntentionSpace_TutorialExercises/tree/e051d12612784ed95552783ca126347c85ecbfa9/is_solid
 ---
 
 ## 1. The Missing Layer of the Web
