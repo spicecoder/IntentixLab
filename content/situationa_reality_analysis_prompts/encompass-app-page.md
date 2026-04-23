@@ -6,7 +6,7 @@ description: Interactive workspace for the Encompass solution app
 
 # Encompass Solution App
 
-[Add a short introductory paragraph here describing what the Encompass app is, who it is for, and what core problem it solves.]
+ Interactive staged analysis environment for deriving prospective Signals, Design Nodes, and resolution paths from Situational Reality
 
 <div style="width: 100%; height: 90vh; border: none; margin-top: 20px;">
   <iframe 
@@ -18,63 +18,271 @@ description: Interactive workspace for the Encompass solution app
 
 ## Overview
 
-[Add a higher-level explanation of the Encompass app here. You can describe the overall approach, the kind of users it supports, and how it fits into your broader Intention Space / solution framework if needed.]
 
-## How to Use
+# Encompass Situational Analysis
 
-1. **Open the app**: [Describe the first thing the user sees or does]
-2. **Enter or select input**: [Describe the main input flow]
-3. **Run the process**: [Describe the primary action or analysis step]
-4. **Review results**: [Describe what outputs, recommendations, or views appear]
-5. **Continue or export**: [Describe any follow-up workflow, save, or export option]
+Encompass is an interactive React-based environment for staged analysis of a real-world situation ("Situational Reality") in order to derive prospective computational structures in Intention Space.
 
-## Key Features
+Rather than generating answers directly, Encompass assists in identifying:
 
-### [Feature Area 1]
-[Brief description placeholder]
+- candidate Intentions  
+- prospective Pulses  
+- possible Design Nodes (DNs)  
+- communication media  
+- potential resolution paths  
+- emerging CPUX execution structures
 
-### [Feature Area 2]
-[Brief description placeholder]
 
-### [Feature Area 3]
-[Brief description placeholder]
 
-### [Feature Area 4]
-[Brief description placeholder]
+# Core Orientation
 
-## Example Use Cases
+## Situational Reality as Structured Signal
 
-- **[Use Case 1]** — [Short placeholder description]
-- **[Use Case 2]** — [Short placeholder description]
-- **[Use Case 3]** — [Short placeholder description]
+A situation is treated as potentially expressible as:
 
-## Inputs and Outputs
+Signal = Intention + Pulses
 
-### Inputs
-- [Input type 1]
-- [Input type 2]
-- [Input type 3]
+where:
 
-### Outputs
-- [Output type 1]
-- [Output type 2]
-- [Output type 3]
+- **Intention** provides direction  
+- **Pulses** represent perceived semantic conditions  
+- **Responses** may carry contextual values  
+- **Signal** becomes the candidate unit for further routing
 
-## Design Notes
+Example:
 
-[Use this section to explain the thinking behind the app: why it was built, what methodological idea it demonstrates, and how users should interpret the output.]
+```json
+{
+ "intention":"report_issue",
+ "pulses":[
+   {"name":"garbage_not_collected","tv":"Y"},
+   {"name":"location_known","tv":"Y","response":"Bansdroni"}
+ ]
+}
+```
 
-## Privacy / Deployment Notes
+This does not assume the Signal is final.
 
-[Add any notes here about where the app is hosted, what data is or is not stored, whether API keys are needed, and any usage limitations.]
+It is a prospective semantic structure emerging from staged analysis.
 
-## Next Steps
+---
 
-1. [Next step placeholder]
-2. [Next step placeholder]
-3. [Next step placeholder]
-4. [Next step placeholder]
+# Staged Progression
 
-## Open in New Tab
+## Stage 1 — Capture Situational Reality
 
-[Launch Encompass Solution App in full screen →](https://encompass-web-beige.vercel.app/)
+Capture a free-form scenario in natural language.
+
+Example:
+
+"Residents report garbage not collected for three days."
+
+Goal:
+
+Identify perceived conditions without prematurely imposing software structure.
+
+Outputs may include:
+
+- actors
+- events
+- constraints
+- context fragments
+
+---
+
+## Stage 2 — Role and Resolver Discovery
+
+Explore:
+
+Who might absorb this situation?
+
+Possible DNs may include:
+
+- municipal officer  
+- sanitation contractor  
+- citizen group  
+- complaint system API
+
+At this stage DNs are candidate resolvers, not yet committed components.
+
+---
+
+## Stage 3 — Internal Grounding
+
+Search existing semantic grounding first.
+
+Possible matches:
+
+- frozen pulses  
+- prior routes  
+- known organisations  
+- existing member DNs  
+- earlier Signals
+
+Grounding modes:
+
+- internal_pulse_pair  
+- known_member  
+- prior_route_match  
+- external_candidate_needed
+
+Only unresolved cases move outward.
+
+---
+
+## Stage 4 — Prospective Signal and Media Formation
+
+Generate possible Signals:
+
+- which Intention may be emitted?
+- which Pulse sets enable it?
+- what medium may carry it?
+
+Possible media:
+
+- physical approach  
+- phone  
+- written message  
+- HTTP/API request
+
+Signal + Medium forms an actionable candidate route.
+
+---
+
+## Stage 5 — CPUX Prospecting
+
+From emerging Signals and candidate DNs, infer possible CPUX fragments:
+
+S1 → DN → S2 → O
+
+or chains such as:
+
+DN → Object → DN
+
+These are design prospects for later formalization.
+
+---
+
+# Internal Grounding Principle
+
+Encompass assumes:
+
+Resolve internally before searching externally.
+
+This reflects:
+
+- reuse of known semantic assets  
+- progressive grounding  
+- lower ambiguity  
+- stronger route continuity
+
+External search acts as augmentation, not authority.
+
+---
+
+# Invitation Expansion
+
+An external candidate may become internal.
+
+Pattern:
+
+candidate resolver  
+→ invited participant  
+→ recognised member DN  
+→ future internal grounding
+
+Thus semantic space can grow.
+
+---
+
+# What the Tool Produces
+
+Encompass may suggest:
+
+## Candidate Intentions
+
+Examples:
+
+- report_issue  
+- escalate_service_failure  
+- request_action
+
+---
+
+## Prospective Pulses
+
+Examples:
+
+- issue_observed:Y  
+- responsible_party_known:Y  
+- communication_path_available:U
+
+---
+
+## Candidate DNs
+
+Examples:
+
+- complaint_officer  
+- sanitation_dispatch  
+- resident_coordinator
+
+---
+
+## Prospective Resolution Paths
+
+Possible routes through Signals and media.
+
+---
+
+# What It Does Not Do
+
+Encompass does not:
+
+- claim authoritative truth  
+- fully synthesize final CPUX definitions  
+- replace design judgment  
+- automatically produce ready-to-run DNs
+
+Its purpose is structured requirement gathering toward CPUX.
+
+---
+
+# Use Cases
+
+Applicable to:
+
+- civic issue analysis  
+- organisational routing problems  
+- service failures  
+- human-machine coordination  
+- early semantic modelling for Intention Space systems
+
+---
+
+# Key Shift
+
+Traditional AI asks:
+
+"What answer should be generated?"
+
+Encompass asks:
+
+"What path toward resolution can be formed within shared semantic space?"
+
+This is the shift from answer generation to situational resolution.
+
+---
+
+# Future Direction
+
+Later versions may support:
+
+- Frozen Pulse retrieval  
+- external resolver search  
+- prospective DN registry  
+- CPUX export  
+- staged LLM grounding assistance
+
+---
+
