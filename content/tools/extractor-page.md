@@ -80,3 +80,12 @@ After extraction:
 ## Open in New Tab
 
 [Launch CPUX Extractor in full screen →](https://cpux-extractor.vercel.app)
+
+
+
+<iframe
+  src="https://keybytesystem.com/phrase-collector/"
+  width="100%"
+  height="780"
+  style="border:1px solid #ddd;border-radius:12px;">
+</iframe>
