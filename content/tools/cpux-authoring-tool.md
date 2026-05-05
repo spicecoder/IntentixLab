@@ -619,7 +619,11 @@ This version is intentionally lightweight. It is designed to run as a static com
 
     const header = document.createElement("div");
     header.className = "phrase-row header";
-    header.innerHTML = "<div>Phrase</div><div>SR Type</div><div>Potential</div><div>IS Role</div><div>TV</div><div></div>";
+    ["Phrase", "SR Type", "Potential", "IS Role", "TV", ""].forEach(label => {
+      const cell = document.createElement("div");
+      cell.textContent = label;
+      header.appendChild(cell);
+    });
     root.appendChild(header);
 
     phrases.forEach((p, index) => {
@@ -752,7 +756,14 @@ This version is intentionally lightweight. It is designed to run as a static com
     checks.forEach(c => {
       const div = document.createElement("div");
       div.className = "verify-item " + (c.ok ? "verify-ok" : "verify-warn");
-      div.innerHTML = "<strong>" + (c.ok ? "✓ " : "⚠ ") + escapeHtml(c.name) + "</strong><br/>" + escapeHtml(c.hint);
+      const title = document.createElement("strong");
+      title.textContent = (c.ok ? "✓ " : "⚠ ") + c.name;
+      const br = document.createElement("br");
+      const hint = document.createElement("span");
+      hint.textContent = c.hint;
+      div.appendChild(title);
+      div.appendChild(br);
+      div.appendChild(hint);
       root.appendChild(div);
     });
   }
@@ -803,9 +814,9 @@ This version is intentionally lightweight. It is designed to run as a static com
     });
     lines.push("");
     lines.push("## CPUX Design");
-    lines.push("```json");
+    lines.push("```" + "json");
     lines.push(JSON.stringify(data.cpux_design, null, 2));
-    lines.push("```");
+    lines.push("```" + "");
 
     download("cpux-author-export.md", lines.join("\n"), "text/markdown");
   }
