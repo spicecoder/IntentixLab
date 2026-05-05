@@ -221,82 +221,122 @@ This version is intentionally lightweight. It is designed to run as a static com
 
 <style>
   .cpux-author {
-    margin-top: 24px;
-    border: 1px solid #253b61;
-    border-radius: 14px;
+    margin-top: 28px;
+    border: 1px solid #24466f;
+    border-radius: 18px;
     overflow: hidden;
-    background: #0f2343;
-    color: #e8eefc;
+    background: #0d1d33;
+    color: #eaf2ff;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    box-shadow: 0 12px 28px rgba(10, 25, 50, .25);
   }
 
   .cpux-topbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 16px;
-    padding: 22px;
-    background: linear-gradient(135deg, #102b57, #163b72);
-    border-bottom: 1px solid #36527c;
+    gap: 18px;
+    padding: 26px 30px;
+    background:
+      radial-gradient(circle at top left, rgba(255, 143, 31, .22), transparent 32%),
+      linear-gradient(135deg, #10284b, #163e73);
+    border-bottom: 1px solid rgba(255,255,255,.14);
   }
 
   .cpux-topbar h2 {
-    margin: 4px 0 0 0;
-    color: #fff;
-    font-size: 24px;
+    margin: 6px 0 0 0;
+    color: #ffffff;
+    font-size: 25px;
+    line-height: 1.25;
+    letter-spacing: .01em;
   }
 
   .cpux-kicker {
-    color: #ffb357;
-    font-weight: 800;
-    letter-spacing: .08em;
+    color: #ffbd73;
+    font-weight: 850;
+    letter-spacing: .11em;
     text-transform: uppercase;
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .cpux-badge {
-    border: 1px solid #6a86b5;
-    background: #132a4f;
-    color: #d7e4ff;
+    border: 1px solid rgba(255, 189, 115, .55);
+    background: rgba(255, 143, 31, .14);
+    color: #ffe0bd;
     border-radius: 999px;
-    padding: 8px 12px;
+    padding: 9px 14px;
     white-space: nowrap;
     font-size: 13px;
+    font-weight: 700;
   }
 
   .cpux-tabs {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
-    padding: 12px;
-    background: #0b1930;
-    border-bottom: 1px solid #36527c;
+    gap: 8px;
+    padding: 14px 20px;
+    background: #09162a;
+    border-bottom: 1px solid rgba(255,255,255,.12);
   }
 
-  .cpux-tabs button,
-  .cpux-author button {
-    background: #1c3d70;
-    border: 1px solid #3c5f93;
-    color: #f4f7ff;
-    border-radius: 8px;
-    padding: 10px 12px;
+  .cpux-tabs button {
+    background: #142b4c;
+    border: 1px solid #315987;
+    color: #dce9ff;
+    border-radius: 999px;
+    padding: 10px 14px;
     cursor: pointer;
-    font-weight: 700;
+    font-weight: 750;
+    transition: transform .12s ease, background .12s ease, border .12s ease;
   }
 
   .cpux-tabs button.active {
-    background: #ff8f1f;
-    border-color: #ffb357;
-    color: #1b1208;
+    background: #ff941f;
+    border-color: #ffc176;
+    color: #1a1108;
+    box-shadow: 0 0 0 3px rgba(255,148,31,.18);
+  }
+
+  .cpux-author button {
+    background: #24558f;
+    border: 1px solid #4778b2;
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 11px 15px;
+    cursor: pointer;
+    font-weight: 800;
+    transition: transform .12s ease, filter .12s ease, background .12s ease;
   }
 
   .cpux-author button:hover {
-    opacity: .92;
+    transform: translateY(-1px);
+    filter: brightness(1.08);
+  }
+
+  .cpux-author button.primary-action,
+  #discoverPhrasesBtn,
+  #nextToPhrasesBtn,
+  #addPhraseBtn,
+  #generateDesignBtn,
+  #runVerifyBtn,
+  #buildExportBtn,
+  #downloadJsonBtn,
+  #downloadMarkdownBtn {
+    background: linear-gradient(135deg, #ff941f, #ffb547);
+    border-color: #ffd092;
+    color: #1e1305;
+    box-shadow: 0 8px 18px rgba(255, 148, 31, .18);
+  }
+
+  #clearDraftBtn {
+    background: #6b1f2a;
+    border-color: #a54655;
+    color: #ffe5e8;
   }
 
   .cpux-panel {
     display: none;
-    padding: 22px;
+    padding: 30px;
   }
 
   .cpux-panel.active {
@@ -304,37 +344,45 @@ This version is intentionally lightweight. It is designed to run as a static com
   }
 
   .cpux-panel h3 {
-    color: #fff;
+    color: #ffffff;
     margin-top: 0;
+    font-size: 23px;
+    letter-spacing: .01em;
   }
 
   .cpux-card,
   .cpux-slot {
-    background: rgba(255,255,255,.06);
+    background: rgba(255,255,255,.055);
     border: 1px solid rgba(255,255,255,.14);
-    border-radius: 12px;
-    padding: 16px;
-    margin: 14px 0;
+    border-radius: 16px;
+    padding: 18px;
+    margin: 16px 0;
+  }
+
+  .cpux-card h4,
+  .cpux-slot h4 {
+    margin-top: 0;
+    color: #ffcf91;
   }
 
   .cpux-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
+    gap: 16px;
   }
 
   .cpux-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin: 14px 0;
+    gap: 12px;
+    margin: 18px 0;
   }
 
   .cpux-author label {
     display: block;
-    font-weight: 700;
-    margin-top: 12px;
-    color: #cbd7f4;
+    font-weight: 800;
+    margin-top: 14px;
+    color: #d6e4ff;
   }
 
   .cpux-author input,
@@ -342,33 +390,43 @@ This version is intentionally lightweight. It is designed to run as a static com
   .cpux-author select {
     width: 100%;
     box-sizing: border-box;
-    margin-top: 6px;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #4e6c9e;
-    background: #0c1b33;
-    color: #ffffff;
+    margin-top: 7px;
+    padding: 12px 13px;
+    border-radius: 11px;
+    border: 1px solid #5578aa;
+    background: #071a31;
+    color: #f8fbff;
     font-size: 15px;
+    outline: none;
+  }
+
+  .cpux-author input:focus,
+  .cpux-author textarea:focus,
+  .cpux-author select:focus {
+    border-color: #ffb547;
+    box-shadow: 0 0 0 3px rgba(255, 181, 71, .18);
   }
 
   .cpux-author textarea {
-    min-height: 120px;
+    min-height: 125px;
+    line-height: 1.45;
   }
 
   .cpux-author pre {
     white-space: pre-wrap;
     word-break: break-word;
-    background: #081122;
+    background: #06101f;
     color: #d9e6ff;
     border: 1px solid #263d63;
-    border-radius: 10px;
-    padding: 12px;
-    min-height: 40px;
+    border-radius: 12px;
+    padding: 14px;
+    min-height: 44px;
     overflow: auto;
   }
 
   .cpux-hint {
-    color: #aebfe4;
+    color: #c1cce0;
+    line-height: 1.55;
   }
 
   .phrase-row {
@@ -376,32 +434,35 @@ This version is intentionally lightweight. It is designed to run as a static com
     grid-template-columns: 1.4fr .9fr .9fr .8fr .35fr .35fr;
     gap: 8px;
     align-items: start;
-    padding: 10px;
+    padding: 12px;
     border-bottom: 1px solid rgba(255,255,255,.1);
   }
 
   .phrase-row.header {
-    font-weight: 800;
+    font-weight: 850;
     color: #ffcf91;
+    background: rgba(255, 255, 255, .045);
+    border-radius: 10px 10px 0 0;
   }
 
   .phrase-row button {
-    padding: 8px;
+    padding: 9px;
+    min-height: 42px;
   }
 
   .verify-item {
-    padding: 12px;
-    margin: 8px 0;
-    border-radius: 10px;
+    padding: 14px;
+    margin: 10px 0;
+    border-radius: 12px;
     border: 1px solid rgba(255,255,255,.14);
   }
 
   .verify-ok {
-    background: rgba(22, 163, 74, .18);
+    background: rgba(22, 163, 74, .20);
   }
 
   .verify-warn {
-    background: rgba(245, 158, 11, .18);
+    background: rgba(245, 158, 11, .20);
   }
 
   @media (max-width: 900px) {
@@ -413,6 +474,10 @@ This version is intentionally lightweight. It is designed to run as a static com
     .cpux-topbar {
       align-items: flex-start;
       flex-direction: column;
+    }
+
+    .cpux-panel {
+      padding: 22px;
     }
   }
 </style>
