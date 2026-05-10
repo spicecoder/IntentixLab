@@ -28,7 +28,7 @@ CGP does not position things in pixels.
 
 It positions things by:
 
-1. defining a bounded viewport as a grid of rows and columns
+1. defining a bounded viewport as a grid of rows and columns- we refer to this as a viewgrid too.
 2. choosing a starting cell inside that grid
 3. choosing how many rows and columns the element spans
 
@@ -49,8 +49,8 @@ Those four numbers only make sense inside a grid context.
 
 So a complete CGP definition is:
 
-- viewport rows
-- viewport columns
+- viewport rows (viewgrid rows)
+- viewport columns  (viewgrid columns)
 - start row
 - start column
 - row span
