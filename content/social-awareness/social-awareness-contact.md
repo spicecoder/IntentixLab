@@ -52,7 +52,7 @@ The guiding principle is simple:
 
 Use this form to express interest, suggest collaboration, join occasional updates, or participate in future Social Awareness discussions.
 
-<div class="intentix-contact-form"><div class="intentix-form-card"><label for="intentixName">Name *</label><input id="intentixName" placeholder="Your name"><label for="intentixEmail">Email *</label><input id="intentixEmail" type="email" placeholder="you@example.com"><label for="intentixOrg">Community / Organization / Interest Area</label><input id="intentixOrg" placeholder="School, community group, research area, local group, or personal interest"><label for="intentixInterest">Participation Interest</label><select id="intentixInterest"><option>Newsletter subscription only</option><option>Healthy Internet awareness</option><option>Consent-based communication</option><option>Media and social tension reflection</option><option>Conversation circles / community dialogue</option><option>Education / students / parenting</option><option>Digital privacy and dignity</option><option>Ethical technology and AI</option><option>Volunteer / collaboration interest</option><option>General social awareness discussion</option></select><label class="intentix-checkbox-row"><input id="intentixNewsletter" type="checkbox"> I would like to receive occasional Social Awareness reflections and updates.</label><label class="intentix-checkbox-row"><input id="intentixConsent" type="checkbox"> I understand this is a respectful civic discussion space, not a place for abuse, propaganda, or hostile targeting.</label><label for="intentixMessage">Message *</label><textarea id="intentixMessage" placeholder="Tell us what you are interested in, or what kind of social awareness conversation you would like to support."></textarea><input id="intentixWebsite" class="intentix-hidden" autocomplete="off" tabindex="-1"><button id="intentixSubmit" type="button">Send Social Awareness Message</button><pre id="intentixStatus"></pre></div></div>
+<div class="intentix-contact-form"><div class="intentix-form-card"><label for="intentixName">Name *</label><input id="intentixName" placeholder="Your name"><label for="intentixEmail">Email *</label><input id="intentixEmail" type="email" placeholder="you@example.com"><label for="intentixOrg">Community / Organization / Interest Area</label><input id="intentixOrg" placeholder="School, community group, research area, local group, or personal interest"><label for="intentixInterest">Participation Interest</label><select id="intentixInterest"><option>Newsletter subscription only</option><option>Healthy Internet awareness</option><option>Consent-based communication</option><option>Media and social tension reflection</option><option>Conversation circles / community dialogue</option><option>Education / students / parenting</option><option>Digital privacy and dignity</option><option>Ethical technology and AI</option><option>Volunteer / collaboration interest</option><option>General social awareness discussion</option></select><label class="intentix-checkbox-row"><input id="intentixNewsletter" type="checkbox"> I would like to receive occasional Social Awareness reflections and updates.</label><label class="intentix-checkbox-row"><input id="intentixConsent" type="checkbox"> I understand this is a respectful civic discussion space, not a place for abuse, propaganda, or hostile targeting.</label><label for="intentixPriority">Human intent check *</label><p class="intentix-help">Please type the number of the highest priority for this initiative: 1 = respectful conversation, 2 = spam promotion, 3 = hostile targeting.</p><input id="intentixPriority" inputmode="numeric" placeholder="Enter priority number"><label for="intentixMessage">Message *</label><textarea id="intentixMessage" placeholder="Tell us what you are interested in, or what kind of social awareness conversation you would like to support."></textarea><input id="intentixWebsite" class="intentix-hidden" autocomplete="off" tabindex="-1"><button id="intentixSubmit" type="button">Send Social Awareness Message</button><pre id="intentixStatus"></pre></div></div>
 
 <style>
 .intentix-contact-form{margin:28px 0;border:1px solid #ddd4c2;border-radius:18px;padding:12px;background:linear-gradient(135deg,rgba(216,137,0,.10),rgba(255,255,255,.95)),#fff;box-shadow:0 10px 24px rgba(0,0,0,.08)}
@@ -66,6 +66,7 @@ Use this form to express interest, suggest collaboration, join occasional update
 .intentix-hidden{position:absolute!important;left:-9999px!important;opacity:0!important}
 .intentix-checkbox-row{display:flex!important;gap:10px;align-items:flex-start;font-weight:600!important;line-height:1.45;margin-top:16px!important;color:#3f2c11!important}
 .intentix-checkbox-row input{width:auto!important;margin-top:4px!important}
+.intentix-help{margin:7px 0 0 0;color:#5b4630;font-size:14px;line-height:1.45}
 </style>
 
 <script>
@@ -79,12 +80,14 @@ Use this form to express interest, suggest collaboration, join occasional update
   async function submitIntentixContact(){
     const newsletter = byId("intentixNewsletter").checked;
     const consent = byId("intentixConsent").checked;
+    const humanPriority = byId("intentixPriority").value.trim();
     const payload = {
       name: byId("intentixName").value.trim(),
       email: byId("intentixEmail").value.trim(),
       organization: byId("intentixOrg").value.trim(),
       interest: byId("intentixInterest").value,
       newsletter: newsletter ? "yes" : "no",
+      human_priority: humanPriority,
       message: byId("intentixMessage").value.trim(),
       source_url: window.location.href,
       website: byId("intentixWebsite").value.trim()
@@ -95,6 +98,10 @@ Use this form to express interest, suggest collaboration, join occasional update
     }
     if(!consent){
       showStatus("Please confirm that you understand the respectful civic purpose of this contact space.");
+      return;
+    }
+    if(humanPriority !== "1"){
+      showStatus("Please complete the human intent check. The highest priority is respectful conversation.");
       return;
     }
     byId("intentixSubmit").disabled = true;
@@ -117,6 +124,7 @@ Use this form to express interest, suggest collaboration, join occasional update
       byId("intentixEmail").value = "";
       byId("intentixOrg").value = "";
       byId("intentixMessage").value = "";
+      byId("intentixPriority").value = "";
       byId("intentixNewsletter").checked = false;
       byId("intentixConsent").checked = false;
     } catch(e) {
@@ -152,4 +160,4 @@ The deeper aim is to encourage a healthier internet culture where:
 
 The form posts to the IntentixLab Contact API hosted in the existing WordPress/SiteGround environment. Messages are intended for Social Awareness communication and occasional newsletter follow-up where requested.
 
-If newsletter handling later moves to a dedicated mailing-list provider, this page can be updated while keeping the same public structure.
+
