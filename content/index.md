@@ -41,4 +41,7 @@ The CPUX engine executes intentions through transparent execution paths, elimina
 - [Architecture](/architecture/index.html)
 - [Tutorials](/tutorials/index.html)
 - [Research](/research/index.html)
+- [Situation Reality and Pulses](/situational_reality_analysis_prompts/index.html) 
+- [Social Awareness](social-awareness/index.html)
 - [Tools](/tools/index.html)
+- [Contact IntentixLab](contactIntentixlab/index.html)
