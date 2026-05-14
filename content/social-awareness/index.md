@@ -46,8 +46,19 @@ IntentixLab studies perception-driven and intention-aware systems. The Social Aw
 6. [Prototype Path](/social-awareness/prototype-path.html)  
    Small demonstrators that can turn the awareness program into practical tools and standards.
 
+7. [Contact and Participate](/social-awareness/social-awareness-contact.html)  
+   A place for people who are curious, concerned, or carrying practical ideas to join the conversation.
+
 ## Starting position
 
 At this stage, the program does not need to be tied to Melbourne in its name or message. It can begin as an IntentixLab civic digital wellbeing initiative, and later include Melbourne-based collaborations, workshops, grants, or pilot groups where appropriate.
 
 The first goal is to create a clear public place where people can understand the concern, recognise themselves in the problem, and join a practical conversation about healthier digital interaction.
+
+## Contact and participate
+
+If this concern resonates with you — whether as a citizen, parent, learner, educator, technologist, researcher, community worker, or simply as someone who wants healthier digital spaces — you are welcome to make contact.
+
+You do not need to be technical to participate. Curiosity, concern, lived experience, careful questions, and practical ideas are all valuable starting points.
+
+Use the [Social Awareness contact page](/social-awareness/social-awareness-contact.html) to share your interest, suggest a topic, join future reflections, or subscribe for occasional updates.
