@@ -263,3 +263,16 @@ intention-space-site/
 ├── package.json
 └── dist/                           # GENERATED OUTPUT (git-ignored)
 ```
+--
+
+
+## building 
+
+
+
+Internet for the Living
+Human-Centred Digital Spaces
+Consent Before Intrusion
+Technology with Mutual Regard
+Quiet Spaces for Human Growth
+Respectful Digital Society
