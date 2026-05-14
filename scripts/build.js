@@ -123,16 +123,48 @@ function buildNavTree(contentDir) {
 
 // ─── Render Navigation HTML ──────────────────────────────────────
 
+// function renderNav(tree, activePath = '', depth = 0) {
+//   let html = `<ul class="nav-level-${depth}">`;
+
+//   for (const item of tree) {
+//     if (item.type === 'section') {
+//       const isActive = activePath.startsWith(`/${item.name}`);
+//       const openAttr = isActive ? ' open' : '';
+//       html += `<li class="nav-section${isActive ? ' active' : ''}">`;
+//       html += `<details${openAttr}>`;
+//       html += `<summary>${item.label}</summary>`;
+//       html += renderNav(item.children, activePath, depth + 1);
+//       html += `</details></li>`;
+//     } else {
+//       const isActive = activePath === item.href;
+//       html += `<li class="nav-page${isActive ? ' active' : ''}">`;
+//       html += `<a href="${item.href}">${item.label}</a></li>`;
+//     }
+//   }
+
+//   html += '</ul>';
+//   return html;
+// }
+// Locate this section in your renderNav function in scripts/build.js
+
 function renderNav(tree, activePath = '', depth = 0) {
   let html = `<ul class="nav-level-${depth}">`;
 
   for (const item of tree) {
     if (item.type === 'section') {
       const isActive = activePath.startsWith(`/${item.name}`);
+      const isExactActive = activePath === item.href; // Check if this index is exactly active
       const openAttr = isActive ? ' open' : '';
+      
       html += `<li class="nav-section${isActive ? ' active' : ''}">`;
       html += `<details${openAttr}>`;
-      html += `<summary>${item.label}</summary>`;
+      
+      // FIX: Wrap the summary in a link if item.href exists
+      const labelHtml = item.href 
+        ? `<a href="${item.href}" class="${isExactActive ? 'active-link' : ''}">${item.label}</a>`
+        : item.label;
+        
+      html += `<summary>${labelHtml}</summary>`;
       html += renderNav(item.children, activePath, depth + 1);
       html += `</details></li>`;
     } else {
@@ -145,6 +177,7 @@ function renderNav(tree, activePath = '', depth = 0) {
   html += '</ul>';
   return html;
 }
+
 
 // ─── Process a Single Markdown File ──────────────────────────────
 
