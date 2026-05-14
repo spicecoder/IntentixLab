@@ -132,15 +132,7 @@ function renderNav(tree, activePath = '', depth = 0) {
       const openAttr = isActive ? ' open' : '';
       html += `<li class="nav-section${isActive ? ' active' : ''}">`;
       html += `<details${openAttr}>`;
-
-      // If a section has an index.md page, make the section label open that page.
-      // The small arrow/marker still expands or collapses the section.
-      if (item.href) {
-        html += `<summary><a class="nav-section-link" href="${item.href}">${item.label}</a></summary>`;
-      } else {
-        html += `<summary>${item.label}</summary>`;
-      }
-
+      html += `<summary>${item.label}</summary>`;
       html += renderNav(item.children, activePath, depth + 1);
       html += `</details></li>`;
     } else {

@@ -159,13 +159,3 @@ pre code {
 pre code .hljs {
   background: transparent;
 }
-/* Section index link: lets section labels open their index.md page */
-.nav-section details summary .nav-section-link {
-  color: inherit;
-  text-decoration: none;
-  flex: 1;
-}
-
-.nav-section details summary .nav-section-link:hover {
-  color: var(--accent-light);
-}
