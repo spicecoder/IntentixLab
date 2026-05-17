@@ -1,10 +1,7 @@
----
-title: Ongoing Research at Intentix Lab
-order: 1
-description: Investigating perception-driven computation, situational reality, Stability Intelligence, and field-oriented models of cognition bridging human understanding and emerging AI systems
----
 
+# Research At IntentixLab
 
+Investigating perception-driven computation, situational reality, Stability Intelligence, and field-oriented models of cognition bridging human understanding and emerging AI systems
 
 ## Topics
 
