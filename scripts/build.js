@@ -80,11 +80,13 @@ function buildNavTree(contentDir) {
     if (entry.name.startsWith('.') || entry.name.startsWith('_')) continue;
 
     if (entry.isDirectory()) {
-      const children = buildNavTree(path.join(contentDir, entry.name));
-      const indexPath = path.join(contentDir, entry.name, 'index.md');
+      const entryPath = path.join(contentDir, entry.name);
+      const children = buildNavTree(entryPath);
+      const indexPath = path.join(entryPath, 'index.md');
       const hasIndex = fs.existsSync(indexPath);
+      const relDir = path.relative(CONFIG.contentDir, entryPath);
       
-      const metaPath = path.join(contentDir, entry.name, '_meta.json');
+      const metaPath = path.join(entryPath, '_meta.json');
       let order = 999;
       let label = titleCase(entry.name);
       if (fs.existsSync(metaPath)) {
@@ -98,7 +100,8 @@ function buildNavTree(contentDir) {
         name: entry.name,
         label,
         order,
-        href: hasIndex ? `/${entry.name}/index.html` : null,
+        path: `/${relDir}`,
+        href: hasIndex ? `/${relDir}/index.html` : null,
         children,
       });
     } else if (entry.name.endsWith('.md') && entry.name !== 'index.md') {
@@ -152,7 +155,7 @@ function renderNav(tree, activePath = '', depth = 0) {
 
   for (const item of tree) {
     if (item.type === 'section') {
-      const isActive = activePath.startsWith(`/${item.name}`);
+      const isActive = activePath === item.href || activePath.startsWith(`${item.path}/`);
       const isExactActive = activePath === item.href; // Check if this index is exactly active
       const openAttr = isActive ? ' open' : '';
       
