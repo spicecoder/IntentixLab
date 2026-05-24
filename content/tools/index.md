@@ -4,6 +4,7 @@ Utilities and practical tools built around the framework.
 
 ## Topics
 
+- [IScore Across Languages](./iscore-across-languages.html)
 
 - [Entity-Extractor](./extractor-page.html)
 - [CPUX Developers Guide](./cpux-gridlookout-guide.html)
