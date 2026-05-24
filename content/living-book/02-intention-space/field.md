@@ -29,6 +29,41 @@ The Field Pulse Set records the current Pulses, usually preserving the latest tr
 
 ---
 
+## Sample Anchor: Field Snapshot
+
+After the Green Light IC reflects a movement result, the Field may hold a snapshot like:
+
+```json
+{
+  "fis": [
+    "I_reflect_movement_state"
+  ],
+  "fps": {
+    "current light": {
+      "phrase": "current light",
+      "tv": "Y",
+      "response": ["green"]
+    },
+    "movement allowed": {
+      "phrase": "movement allowed",
+      "tv": "Y",
+      "response": ["true"]
+    },
+    "current position": {
+      "phrase": "current position",
+      "tv": "Y",
+      "response": ["4"]
+    }
+  }
+}
+```
+
+This is not a generic app store.
+
+It is the represented situation that the Visitor can test on the next pass.
+
+---
+
 ## Field As State
 
 Traditional applications often treat state as values stored in components, stores, databases, sessions, or caches.
@@ -78,4 +113,3 @@ The Field preserves the wider CPUX reality after the human-facing result is refl
 Do not think of the Field as a generic state bag.
 
 Think of it as the represented situational reality of a CPUX unit of work.
-

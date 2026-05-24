@@ -349,3 +349,18 @@ This list is the living-book map. It should be updated whenever chapters are add
 - [Persistence And Replay](/living-book/04-cpux-machine/persistence-and-replay.html)
 - [IC Container Deep Dive](/living-book/04-cpux-machine/ic-container-deep-dive.html)
 - [Object Reflector Deep Dive](/living-book/04-cpux-machine/object-reflector-deep-dive.html)
+- [Field Context And Signal Transfer](/living-book/04-cpux-machine/field-context-and-signal-transfer.html)
+- [Retained IC Context](/living-book/04-cpux-machine/retained-ic-context.html)
+- [Field Composition Not Hierarchy](/living-book/04-cpux-machine/field-composition-not-hierarchy.html)
+- [FieldBoard Multi-App Coordination](/living-book/04-cpux-machine/fieldboard-multi-app-coordination.html)
+- [Human UI And AutoInteraction Bridge](/living-book/04-cpux-machine/human-ui-and-autointeraction-bridge.html)
+
+### Samples
+
+- [Samples](/living-book/05-samples/index.html)
+- [Runnable Samples And SDK Boundary](/living-book/05-samples/runnable-samples-sdk-boundary.html)
+- [Green Light Red Light CPUX](/living-book/05-samples/green-light-red-light-cpux.html)
+- [React GridLookout Green Light](/living-book/05-samples/react-gridlookout-green-light.html)
+- [Android GridLookout Green Light](/living-book/05-samples/android-gridlookout-green-light.html)
+- [LLM As Design Node](/living-book/05-samples/llm-as-design-node.html)
+- [AutoInteraction Test Path](/living-book/05-samples/autointeraction-test-path.html)

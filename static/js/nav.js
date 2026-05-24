@@ -6,4 +6,14 @@
   nav.querySelectorAll('.nav-page a').forEach(link => {
     link.addEventListener('click', () => { nav.classList.remove('open'); });
   });
+  nav.querySelectorAll('.nav-section-link').forEach(link => {
+    link.addEventListener('click', event => {
+      event.stopPropagation();
+    });
+  });
+  nav.querySelectorAll('.nav-section-title-link').forEach(link => {
+    link.addEventListener('click', event => {
+      event.stopPropagation();
+    });
+  });
 })();

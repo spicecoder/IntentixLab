@@ -69,6 +69,59 @@ these perceptions are being carried for this purpose
 
 ---
 
+## Three Roles Of A Signal
+
+In CPUX, a Signal is not only input data.
+
+It has three related roles.
+
+### 1. Input To A DN
+
+A runtime Signal can carry the actual Pulse responses that a Design Node receives:
+
+```json
+{
+  "intention": { "id": "I_move_if_allowed" },
+  "pulses": [
+    { "phrase": "current light", "tv": "Y", "response": ["green"] }
+  ]
+}
+```
+
+The DN reads the response values and computes a result.
+
+### 2. Synctest Condition
+
+A designated input Signal can also act as the test condition for whether an IC should execute.
+
+For example:
+
+```text
+required Intention: I_move_if_allowed
+required Pulse:     current light
+```
+
+The Visitor compares this designated input against the current Field. If the Field contains the required Intention and Pulse/TV condition, the IC becomes eligible.
+
+This means the Signal is not merely data sent to a process. It is also the designer's declaration of the situation under which the process may run.
+
+### 3. Output Validation
+
+A designated output Signal also acts as the validation condition for the result emitted by a DN.
+
+O_reflector compares the DN's emitted Signal with the configured expectation:
+
+```text
+expected Intention: I_movement_result
+required Pulses:    movement allowed, current position
+```
+
+If the emitted Signal matches, O_reflector reflects it outward for direct result, subscribers, and Field absorption.
+
+If it does not match, O_reflector can reject it, hold it, or raise an error condition.
+
+---
+
 ## Signals And CPUX
 
 Signals move through CPUX:
@@ -98,4 +151,3 @@ I_request_shipping_estimate
 ```
 
 The Signal should help a future reader understand the situation, not only the code path.
-

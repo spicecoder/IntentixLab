@@ -94,9 +94,50 @@ This supports debugging, replay, and causality inspection.
 
 ---
 
+## Sample Anchor: Green Light Field
+
+The Green Light sample Field can be small enough to inspect by eye:
+
+```json
+{
+  "id": "Field_green_light_001",
+  "cpuxId": "CPUX_green_light",
+  "fis": ["I_reflect_movement_state"],
+  "fps": {
+    "current light": {
+      "phrase": "current light",
+      "tv": "Y",
+      "response": ["green"]
+    },
+    "movement allowed": {
+      "phrase": "movement allowed",
+      "tv": "Y",
+      "response": ["true"]
+    },
+    "current position": {
+      "phrase": "current position",
+      "tv": "Y",
+      "response": ["crossing"]
+    }
+  },
+  "pickupHistory": [
+    {
+      "seqNo": 1,
+      "icId": "IC_move_if_allowed",
+      "signalId": "S_movement_result_001"
+    }
+  ]
+}
+```
+
+The UI can render this as a moving object, but the Field itself is not UI state.
+
+It is the represented situation after O_reflector has accepted a DN result.
+
+---
+
 ## Developer Rule
 
 Do not treat the Field as a generic mutable store.
 
 It is a represented situational state created through reflected Signals.
-

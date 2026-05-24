@@ -56,6 +56,38 @@ These modes let the same IC handle normal action, re-entry after interruption, p
 
 ---
 
+## O_holder And Client Action Modes
+
+In client-facing CPUX, O_holder is the Object that facilitates the four standard perception modes:
+
+```text
+act
+commit
+resume
+reset
+```
+
+These modes are carried by the client action Signal through the distinguished Pulse:
+
+```text
+<"_perception_mode", Y, ["act"]>
+```
+
+O_holder interprets that mode before building the enriched input for the DN.
+
+```text
+act    -> append the new perception
+commit -> freeze or affirm accumulated perception for final action
+resume -> replay accumulated perception from persistence
+reset  -> purge accumulated perception and begin again
+```
+
+The DN does not need to implement the lifecycle mechanics of accumulation, replay, purge, or freeze. O_holder provides that lifecycle boundary as part of the IC.
+
+This is especially important in ReactJS, Android, and future native GridLookout platforms because client action is not always a simple submit event. It may be a continuation, interruption recovery, cancellation, or final commitment.
+
+---
+
 ## O_reflector
 
 O_reflector receives the DN result and reflects it outward.

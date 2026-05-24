@@ -62,6 +62,40 @@ This keeps the DN/O_reflector boundary explicit.
 
 ---
 
+## Validating The Emitted Signal
+
+O_reflector also checks the validity of the Signal emitted by the DN.
+
+The DN is expected to emit a result that matches the designated output Signal for that IC boundary. O_reflector compares the runtime emitted Signal against the configured expectation before reflecting it outward.
+
+In practice, this means checking:
+
+- the emitted Intention is the expected one
+- the required Pulse phrases are present
+- the Pulse trivalence values are acceptable for the configured reflection
+- the Signal is structurally valid enough to be reflected
+
+The DN remains a black box internally, but its emitted Signal is not accepted blindly.
+
+```text
+DN result Signal
+      |
+      v
+O_reflector checks against designated output
+      |
+      +-- valid   -> reflect outward
+      |
+      `-- invalid -> emit error / reject / hold for handling
+```
+
+This gives the designer a protective boundary. The DN can compute internally however it wants, but only a valid emitted Signal can become part of the CPUX Field.
+
+In this sense, the designated output Signal is a test condition for absorption. The DN's emitted Signal must pass O_reflector's Signal test before it can become a reflected Signal.
+
+If the test fails, O_reflector can raise an error condition rather than allowing an invalid result to enter the Field.
+
+---
+
 ## Reflected Signal
 
 After accepting the DN result, O_reflector emits the configured reflected Signal.

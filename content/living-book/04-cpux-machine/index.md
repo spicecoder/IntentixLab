@@ -77,8 +77,33 @@ The CPUX overview should be read alongside the chapters that explain its executa
 - [Visitor And Synctest](/living-book/04-cpux-machine/visitor-and-synctest.html) explains how the Visitor reads the Field, tests designated input, reaches golden pass, and expresses runtime stability.
 - [IC Container Deep Dive](/living-book/04-cpux-machine/ic-container-deep-dive.html) explains the Intention Container as the executable CPUX cell.
 - [Object Reflector Deep Dive](/living-book/04-cpux-machine/object-reflector-deep-dive.html) explains how O_reflector turns DN output into direct result, pickup event, subscriber update, and Field absorption.
+- [Field Context And Signal Transfer](/living-book/04-cpux-machine/field-context-and-signal-transfer.html) explains how context moves through Signals, retained IC state, reflection, and Field absorption.
+- [Retained IC Context](/living-book/04-cpux-machine/retained-ic-context.html) explains how O_holder keeps local IC context through act, commit, resume, and reset.
+- [Field Composition Not Hierarchy](/living-book/04-cpux-machine/field-composition-not-hierarchy.html) explains why Fields compose through FieldBoard release and trigger rules rather than nesting inside each other.
+- [FieldBoard Multi-App Coordination](/living-book/04-cpux-machine/fieldboard-multi-app-coordination.html) explains how one user FieldBoard can coordinate login, banking, health monitoring, and other CPUX clusters.
+- [Human UI And AutoInteraction Bridge](/living-book/04-cpux-machine/human-ui-and-autointeraction-bridge.html) explains how the human user can be understood as a DN-like participant, and how UI Pulse surfaces prepare future AutoInteraction.
 
 These chapters are where CPUX moves from vocabulary into runtime behaviour.
+
+---
+
+## Reading With The Green Light Sample
+
+The book now uses a small Green Light movement example as a recurring sample anchor.
+
+As you read the machine chapters, keep this path in mind:
+
+```text
+GridLookout Cell
+-> Signal: I_move_if_allowed
+-> IC_move_if_allowed
+-> DN_move_if_allowed
+-> Signal: I_movement_result
+-> O_reflector validation
+-> direct result + Field absorption
+```
+
+The code snippets are intentionally small and contract-focused. They show what the reader can implement or inspect around the SDK boundary without exposing the private CPUX engine source.
 
 ---
 
@@ -89,6 +114,10 @@ The same CPUX idea can run in different environments.
 In backend mode, the Visitor can run synchronously until no more containers are eligible.
 
 In frontend mode, the Visitor may sleep at the golden pass and wake again when human action changes the Field.
+
+Frontend mode should be understood primarily as a **client-side runtime engine**. It is not only a UI adapter or rendering helper. The CPUX engine can live on the client device, maintain active Fields, coordinate ICs, handle direct GridLookout action, and preserve the human perception loop at runtime.
+
+The rendering platform may be ReactJS, Android, iOS, Flutter, desktop, terminal, or embedded UI. The frontend CPUX engine is the client-side coordination layer underneath that native surface.
 
 This gives CPUX a single conceptual machine with different runtime policies:
 

@@ -70,6 +70,40 @@ In CPUX, Response can also support accumulation. O_holder may keep an ordered hi
 
 ---
 
+## Sample Anchor: Current Light
+
+In the Green Light sample, the current light is represented as a Pulse:
+
+```json
+{
+  "phrase": "current light",
+  "tv": "Y",
+  "response": ["green"]
+}
+```
+
+This does more than store a string.
+
+It says:
+
+- the represented perception is `current light`
+- the perception is affirmed in the current situation
+- the current response value is `green`
+
+If the value later becomes red, the Pulse can keep the same phrase while changing the response:
+
+```json
+{
+  "phrase": "current light",
+  "tv": "Y",
+  "response": ["red"]
+}
+```
+
+The phrase remains stable. The situation changes.
+
+---
+
 ## Why A Pulse Is Not Just Data
 
 A data field often says:
@@ -106,4 +140,3 @@ What response value must remain visible?
 ```
 
 If those questions cannot be answered, the Pulse may be too vague.
-

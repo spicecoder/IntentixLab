@@ -115,6 +115,46 @@ IC id -> Intention id -> Pulse phrase
 
 ---
 
+## Sample Anchor: Green Light Cell
+
+The same pattern can drive a simple Green Light sample:
+
+```json
+{
+  "cellId": "light_control",
+  "pulsePhrase": "current light",
+  "receptor": {
+    "cpuxId": "CPUX_green_light",
+    "icId": "IC_move_if_allowed",
+    "actionIntentionId": "I_move_if_allowed"
+  },
+  "interaction": {
+    "kind": "toggle",
+    "perceptionMode": "act"
+  },
+  "subscribe": [
+    {
+      "icId": "IC_move_if_allowed",
+      "intentionId": "I_reflect_movement_state",
+      "pulsePhrase": "movement allowed"
+    },
+    {
+      "icId": "IC_move_if_allowed",
+      "intentionId": "I_reflect_movement_state",
+      "pulsePhrase": "current position"
+    }
+  ]
+}
+```
+
+In React this may render as a toggle and a small board.
+
+In Android it may render as native Material controls.
+
+In iOS, Flutter, or another renderer it should still preserve the same CPUX/UI mode convention: the Cell creates a Signal, the receptor IC receives it, and reflected Pulses come back through direct result or subscription.
+
+---
+
 ## Direct Result
 
 When the Cell sends a Signal to its receptor IC, it should receive the direct IC result from O_reflector.
@@ -130,4 +170,3 @@ This preserves immediate human feedback while the wider CPUX Field continues to 
 GridLookout config should describe perception and routing.
 
 It should not hide validation, correction, or transformation that belongs in a Design Node.
-

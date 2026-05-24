@@ -57,6 +57,28 @@ Each part has a different responsibility.
 
 ---
 
+## Responsibilities Inside The IC
+
+O_holder accumulates perception and facilitates the four client action modes:
+
+```text
+act | commit | resume | reset
+```
+
+The DN performs explicit computation as a black box.
+
+O_reflector validates the DN's emitted Signal against the designated output expectation before reflecting it outward.
+
+This gives the IC a clear inner contract:
+
+```text
+O_holder    -> prepare accumulated context
+DN          -> compute
+O_reflector -> validate and reflect
+```
+
+---
+
 ## The IC Does Not Hide The Path
 
 In traditional application code, the equivalent work may be hidden across:
@@ -156,6 +178,8 @@ The DN computes under a declared input Signal.
 
 O_reflector emits a declared reflected Signal.
 
+Before reflection, O_reflector checks that the emitted Signal is valid for the configured IC boundary.
+
 The Field absorbs the result.
 
 The Visitor tests whether the larger CPUX situation can continue.
@@ -175,4 +199,3 @@ What reflected Signal should become visible afterward?
 ```
 
 If those three answers are not clear, the IC boundary probably needs revision.
-

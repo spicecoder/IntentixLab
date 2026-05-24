@@ -105,9 +105,47 @@ This tells the CPUX runtime and developers when the DN is meaningful to invoke.
 
 ---
 
+## Sample Anchor: Move If Allowed
+
+The Green Light sample can be described without exposing the proprietary CPUX engine internals:
+
+```json
+{
+  "id": "DN_move_if_allowed",
+  "label": "Move If Allowed",
+  "runtime": {
+    "kind": "javascript",
+    "entrypoint": "moveIfAllowed.execute"
+  },
+  "absorbs": [
+    {
+      "intentionId": "I_move_if_allowed",
+      "requiredPulses": ["current light", "current position"]
+    }
+  ],
+  "emits": [
+    {
+      "intentionId": "I_movement_result",
+      "pulsePhrases": [
+        "movement allowed",
+        "current position",
+        "continue movement"
+      ]
+    }
+  ]
+}
+```
+
+The `absorbs` section supports synctest against the current Field.
+
+The `emits` section supports O_reflector validation of the emitted Signal before the Field absorbs it.
+
+The DN code can stay ordinary platform code. CPUX gives that code a represented input contract, a represented output contract, and a stable place in the visitor cycle.
+
+---
+
 ## Developer Rule
 
 Keep the DN manifest focused on execution and Signal contract.
 
 Do not hide business rules in the manifest if they belong inside the DN's explicit computation.
-

@@ -162,10 +162,9 @@ function renderNav(tree, activePath = '', depth = 0) {
       html += `<li class="nav-section${isActive ? ' active' : ''}">`;
       html += `<details${openAttr}>`;
       
-      // FIX: Wrap the summary in a link if item.href exists
-      const labelHtml = item.href 
-        ? `<a href="${item.href}" class="${isExactActive ? 'active-link' : ''}">${item.label}</a>`
-        : item.label;
+      const labelHtml = item.href
+        ? `<a href="${item.href}" class="nav-section-label nav-section-title-link${isExactActive ? ' active-link' : ''}">${item.label}</a>`
+        : `<span class="nav-section-label">${item.label}</span>`;
         
       html += `<summary>${labelHtml}</summary>`;
       html += renderNav(item.children, activePath, depth + 1);

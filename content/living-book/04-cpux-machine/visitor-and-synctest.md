@@ -47,6 +47,26 @@ If the test passes, the Visitor can activate the IC.
 
 ---
 
+## Signal As Test Condition
+
+Synctest is possible because a designated input Signal can be used as a test condition.
+
+At runtime, a Signal carries data to a DN.
+
+At design time, a designated input Signal tells the Visitor what must be present in the Field before that DN can run.
+
+```text
+runtime role:
+  Signal carries actual Pulse responses into DN
+
+synctest role:
+  Signal declares required Intention + Pulse/TV set
+```
+
+This lets CPUX avoid hidden procedural checks. The condition for execution is represented as part of the same Signal language used for runtime communication.
+
+---
+
 ## Designated Input Is A Designer Statement
 
 The designer specifies an IC's designated input.
@@ -410,6 +430,8 @@ Terminate CPUX
 In frontend mode, golden pass means the CPUX has no more autonomous work right now.
 
 The Visitor sleeps, but the Field remains alive.
+
+This is why frontend CPUX should be understood as a client-side runtime engine. The engine remains present on the device, holding the CPUX Field and waiting for the next represented perception from GridLookout.
 
 ```text
 Field state stable

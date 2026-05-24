@@ -14,6 +14,8 @@ It must not wait for Field absorption.
 
 It must not wait for the Visitor's next pass.
 
+This rule belongs to the frontend CPUX engine as a client-side runtime. The engine is close enough to the native GridLookout surface to preserve immediate human feedback while still coordinating the Field and Visitor behind that interaction.
+
 ---
 
 ## Why This Rule Exists
@@ -79,4 +81,3 @@ This distinction prevents a common frontend error:
 Use direct result for the caller's immediate reflected outcome.
 
 Use subscription updates for other Cells that need to respond to the same reflected Signal.
-

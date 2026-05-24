@@ -34,6 +34,43 @@ The CPUX runtime does not need to know the internal logic of every DN. It needs 
 
 ---
 
+## Sample Anchor: Move If Allowed DN
+
+A Green Light DN can stay very small.
+
+It receives a Signal, reads Pulse responses, and emits a result Signal:
+
+```javascript
+function execute(inputSignal) {
+  const light = readPulse(inputSignal, "current light").response[0];
+  const position = Number(readPulse(inputSignal, "current position").response[0]);
+
+  if (light === "green") {
+    return {
+      intention: { id: "I_movement_result" },
+      pulses: [
+        { phrase: "movement allowed", tv: "Y", response: ["true"] },
+        { phrase: "current position", tv: "Y", response: [String(position + 1)] }
+      ]
+    };
+  }
+
+  return {
+    intention: { id: "I_movement_result" },
+    pulses: [
+      { phrase: "movement allowed", tv: "N", response: ["false"] },
+      { phrase: "current position", tv: "Y", response: [String(position)] }
+    ]
+  };
+}
+```
+
+This is sample DN code, not CPUX engine code.
+
+The DN does not know the Visitor, FieldBoard, or persistence internals. It only honours the Signal contract.
+
+---
+
 ## Why Design Nodes Should Be Independent
 
 A DN should be testable outside the full CPUX engine.
@@ -96,4 +133,3 @@ Keep reflection in Objects.
 Keep human-facing perception in GridLookout.
 
 This separation is one of the main disciplines of CPUX.
-

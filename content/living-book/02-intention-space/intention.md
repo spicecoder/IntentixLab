@@ -37,6 +37,33 @@ That stance is the Intention.
 
 ---
 
+## Sample Anchor: Move If Allowed
+
+In the Green Light sample, the same Pulse can participate under a particular Intention:
+
+```json
+{
+  "intention": {
+    "id": "I_move_if_allowed"
+  },
+  "pulses": [
+    {
+      "phrase": "current light",
+      "tv": "Y",
+      "response": ["green"]
+    }
+  ]
+}
+```
+
+The Pulse says what perception is present.
+
+The Intention says what stance the runtime should take toward that perception.
+
+Here, the current light is being carried for the purpose of deciding whether movement is allowed.
+
+---
+
 ## Communication Becomes First-Class
 
 Traditional applications often treat communication identifiers as infrastructure:
@@ -91,4 +118,3 @@ What situation does it belong to?
 ```
 
 An Intention should be understandable as part of a human-facing explanation of the system.
-
