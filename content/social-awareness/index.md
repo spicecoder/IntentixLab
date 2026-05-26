@@ -47,9 +47,14 @@ IntentixLab studies perception-driven and intention-aware systems. The Social Aw
    Small demonstrators that can turn the awareness program into practical tools and standards.
 
 7. [Situational Reality and Being Human in the Age of AI](/social-awareness/situational-reality-and-being-human.html)  
+
    A gentle introduction to how human beings live inside evolving situations, why AI agents remain specialised, and how technology may help people become more human.
 
-8. [Contact and Participate](/social-awareness/social-awareness-contact.html)  
+8. [Situational Reality and Education — Learning Through Craftsmanship and Situational Practice](/social-awareness/situational-reality-and-education.html)
+
+    Current education systems need overhaul — shifting from credential-driven competition toward skill-craftsmanship grounded in real situational realities.
+
+9. [Contact and Participate](/social-awareness/social-awareness-contact.html)  
    A place for people who are curious, concerned, or carrying practical ideas to join the conversation.
 
 
