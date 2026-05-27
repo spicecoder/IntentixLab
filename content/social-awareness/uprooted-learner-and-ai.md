@@ -1,3 +1,9 @@
+---
+title: The Uprooted Learner - Colonial Education Broke Situational Reality Across Generations —  How AI Can Begin to Restore It
+order: 10
+description: How colonial education systems deliberately severed communities from their situational reality, why the migration trap is its long consequence, and why restoring that connection through AI is generational work — not a technological quick fix.
+---
+
 # The Uprooted Learner: How Colonial Education Broke Situational Reality Across Generations — and How AI Can Begin to Restore It
 
 *An extension of [Situational Reality and Education](https://intentixlab.com/social-awareness/situational-reality-and-education.html)*
