@@ -1,9 +1,64 @@
-# Foundations
+# Foundations of Intention Space
 
-The core ideas that define the Intention Space framework.  
-These concepts explain how intentions are represented, structured, and executed.
+Intention Space is a perceptive computation framework grounded on the principle:
 
-## Topics
+> Perception precedes logic.
 
-- [Pulses](./pulses.html)
-- [Design Nodes](./design-nodes.html)
+Traditional software systems are primarily organized around:
+- functions,
+- procedures,
+- objects,
+- events,
+- APIs,
+- workflows,
+- and state transitions.
+
+Intention Space instead begins from:
+
+```text
+Perception → Pulse → Signal → Field → FieldBoard → CPUX
+```
+
+The framework treats computation as the movement of perceptual information through intentional communication into accumulated runtime context.
+
+---
+
+# Foundations Reading Path
+
+## Perception Foundations
+
+- [Perception](perception.html)
+- [Situational Reality](situational-reality.html)
+- [Pulses](pulses.html)
+- [Response Arrays](response-arrays.html)
+
+## Semantic Runtime Foundations
+
+- [Intentions](intentions.html)
+- [Signals](signals.html)
+- [Fields](fields.html)
+- [FieldBoards](fieldboards.html)
+
+## Execution Foundations
+
+- [Design Nodes](design-nodes.html)
+- [Objects](objects.html)
+- [CPUX](cpux.html)
+
+---
+
+# Core Conceptual Ladder
+
+```text
+Perception
+  ↓
+Pulse
+  ↓
+Signal
+  ↓
+Field
+  ↓
+FieldBoard
+  ↓
+CPUX
+```
