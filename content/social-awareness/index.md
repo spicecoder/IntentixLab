@@ -53,6 +53,7 @@ IntentixLab studies perception-driven and intention-aware systems. The Social Aw
 8. [Situational Reality and Education — Learning Through Craftsmanship and Situational Practice](/social-awareness/situational-reality-and-education.html)
 
     Current education systems need overhaul — shifting from credential-driven competition toward skill-craftsmanship grounded in real situational realities.
+9. [The Uprooted Learner: How Colonial Education Broke Situational Reality ] (/social-awareness/uprooted-learner-and-ai.html)    
 
 9. [Contact and Participate](/social-awareness/social-awareness-contact.html)  
    A place for people who are curious, concerned, or carrying practical ideas to join the conversation.

@@ -1,3 +1,14 @@
+---
+title: FieldBoards
+section: Foundations
+keywords:
+  - FieldBoard
+  - CPUX Field
+  - trigger signal
+  - release signal
+  - runtime context
+---
+
 # FieldBoards
 
 A FieldBoard is the runtime container that holds and manages CPUX Fields for a user, device, or session.

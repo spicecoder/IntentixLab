@@ -1,3 +1,13 @@
+---
+title: CPUX
+section: CPUX
+keywords:
+  - CPUX
+  - IC
+ 
+---
+
+
 # CPUX
 
 CPUX stands for:
@@ -7,7 +17,7 @@ Common Path of Understanding and Execution
 ```
 
 A CPUX is an ordered execution structure composed of:
-- Intention Containers,
+- Intention Containers (IC),
 - Design Nodes,
 - Objects,
 - Signals,
