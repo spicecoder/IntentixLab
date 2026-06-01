@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GridLookout Open Source Web Surface Engine Demo</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #0f172a;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* The Global CGP Viewport Canvas Boundary */
+        #cgp-viewport {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.4s ease;
+        }
+
+        /* Framework-Agnostic Spatial Container */
+        pulse-cell {
+            position: absolute;
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            /* Injects Geometry Phase coordinates mapped by the Engine */
+            transform: translate3d(var(--cgp-x), var(--cgp-y), 0);
+            width: var(--cgp-width);
+            height: var(--cgp-height);
+            z-index: var(--cgp-layer, 1);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, width, height;
+        }
+
+        /* Utility view styling for active focus masking */
+        #cgp-viewport.has-maximized pulse-cell:not(.is-maximized) {
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .header-bar {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            z-index: 10000;
+            color: #f8fafc;
+            pointer-events: none;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .header-bar h1 { margin: 0; font-size: 18px; font-weight: 600; letter-spacing: -0.025em; }
+        .header-bar p { margin: 4px 0 0 0; font-size: 12px; color: #94a3b8; }
+
+        .manifest-panel {
+            position: absolute;
+            left: 0;
+            top: 0;
+            transform: translate3d(var(--manifest-x), var(--manifest-y), 0);
+            z-index: 10001;
+            width: var(--manifest-width);
+            height: var(--manifest-height);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 14px;
+            border: 1px solid rgba(148, 163, 184, 0.32);
+            border-radius: 10px;
+            background: rgba(15, 23, 42, 0.92);
+            color: #e2e8f0;
+            box-shadow: 0 18px 36px rgba(0, 0, 0, 0.35);
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .manifest-panel.is-maximized {
+            transform: translate3d(0, 0, 0);
+            width: 100vw;
+            height: 100vh;
+            z-index: 10002;
+        }
+
+        .manifest-head {
+            flex-shrink: 0;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+
+        .manifest-head h2 {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 650;
+        }
+
+        .manifest-head p {
+            margin: 0;
+            margin-top: 4px;
+            color: #94a3b8;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .manifest-editor {
+            flex: 1;
+            min-height: 0;
+            resize: none;
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            border-radius: 8px;
+            padding: 10px;
+            background: #020617;
+            color: #dbeafe;
+            font: 12px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+            user-select: text;
+            -webkit-user-select: text;
+        }
+
+        .manifest-actions {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .manifest-actions button {
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            border-radius: 8px;
+            padding: 8px 10px;
+            background: #2563eb;
+            color: white;
+            font-weight: 650;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+
+        .manifest-actions button.secondary {
+            background: #0f172a;
+            color: #cbd5e1;
+        }
+
+        .manifest-status {
+            min-height: 18px;
+            color: #86efac;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .manifest-status.error {
+            color: #fca5a5;
+        }
+
+        #cell-layer {
+            position: absolute;
+            inset: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-bar">
+        <h1>GridRobe Virtual Wardrobe</h1>
+        <p>CGP Engine v1.1 • Tap to Target Focus • Double Tap to Restore Context</p>
+    </div>
+
+    <div id="cgp-viewport">
+        <div id="cell-layer"></div>
+        <section class="manifest-panel" id="manifest-panel" aria-label="Editable GridLookout manifest">
+            <div class="manifest-head" id="manifest-head">
+                <h2>Manifest test surface</h2>
+                <p>Edit <code>startCell</code> or <code>span</code>. Tap here to expand, double tap to restore.</p>
+            </div>
+            <textarea id="manifest-editor" class="manifest-editor" spellcheck="false"></textarea>
+            <div class="manifest-actions">
+                <button id="apply-manifest" type="button">Apply manifest</button>
+                <button id="reset-manifest" type="button" class="secondary">Reset</button>
+            </div>
+            <div id="manifest-status" class="manifest-status">Ready.</div>
+        </section>
+    </div>
+
+    <script>
+        // 1. The Valid Schema Manifest Modeling the Virtual Wardrobe Scenario
+        const gridLookoutManifest = {
+            "schemaName": "GridLookout",
+            "schemaVersion": "1.1",
+            "cells": [
+                {
+                    "cellId": "pack_travel_bag_001",
+                    "pulsePhrase": "Black Travel Bag Near Window",
+                    "visual": {
+                        "grid": { "rows": 10, "columns": 10 },
+                        "layer": 1,
+                        "position": { "startCell": [2, 2], "span": [4, 4] },
+                        "promptImage": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=600&q=80"
+                    }
+                },
+                {
+                    "cellId": "pack_winter_storage_002",
+                    "pulsePhrase": "Heavy Coats Winter Storage Box",
+                    "visual": {
+                        "grid": { "rows": 10, "columns": 10 },
+                        "layer": 2,
+                        "position": { "startCell": [7, 2], "span": [3, 4] },
+                        "promptImage": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80"
+                    }
+                },
+                {
+                    "cellId": "pack_daily_essentials_003",
+                    "pulsePhrase": "Daily Accessories & Wallet Valet",
+                    "visual": {
+                        "grid": { "rows": 10, "columns": 10 },
+                        "layer": 3,
+                        "position": { "startCell": [2, 7], "span": [5, 3] },
+                        "promptImage": "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=600&q=80"
+                    }
+                }
+            ]
+        };
+
+        const manifestEditorCell = {
+            "cellId": "manifest_editor_004",
+            "pulsePhrase": "Editable GridLookout Manifest",
+            "visual": {
+                "grid": { "rows": 10, "columns": 10 },
+                "layer": 10,
+                "position": { "startCell": [7, 7], "span": [4, 4] }
+            }
+        };
+
+        // 2. Definitive Passive-Receptive Custom HTML5 Element Implementation
+        class PulseCellSurface extends HTMLElement {
+            constructor() {
+                super();
+                this.attachShadow({ mode: 'open' });
+                this.lastTap = 0;
+            }
+
+            connectedCallback() {
+                this.render();
+                // Uniform gesture pipeline interception
+                this.addEventListener('click', (e) => this.evaluateGesture(e));
+                this.addEventListener('touchstart', (e) => this.evaluateGesture(e));
+            }
+
+            evaluateGesture(e) {
+                // Prevent touch-and-click trace collisions
+                if (e.type === 'touchstart') this.hasTouched = true;
+                if (e.type === 'click' && this.hasTouched) return;
+
+                const currentTime = Date.now();
+                const tapInterval = currentTime - this.lastTap;
+
+                if (tapInterval < 300 && tapInterval > 0) {
+                    // Double Tap Handler Vector
+                    this.dispatchEvent(new CustomEvent('cgp-revert', { bubbles: true, detail: this }));
+                } else {
+                    // Single Tap Handler Vector
+                    this.dispatchEvent(new CustomEvent('cgp-maximize', { bubbles: true, detail: this }));
+                }
+                this.lastTap = currentTime;
+            }
+
+            render() {
+                const phrase = this.getAttribute('phrase') || '';
+                const graphic = this.getAttribute('graphic') || '';
+                
+                this.shadowRoot.innerHTML = `
+                    <style>
+                        :host {
+                            display: block;
+                            width: 100%;
+                            height: 100%;
+                            container-type: inline-size;
+                        }
+                        .surface-box {
+                            width: 100%;
+                            height: 100%;
+                            border-radius: 12px;
+                            padding: 16px;
+                            background: #1e293b;
+                            border: 1px solid #334155;
+                            display: flex;
+                            flex-direction: column;
+                            overflow: hidden;
+                            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+                            cursor: pointer;
+                            transition: background-color 0.3s;
+                        }
+                        .surface-box:hover {
+                            background: #334155;
+                        }
+                        h3 {
+                            color: #f8fafc;
+                            margin: 0 0 12px 0;
+                            font-size: clamp(13px, 5cqw, 20px);
+                            font-weight: 500;
+                            line-height: 1.2;
+                        }
+                        .img-container {
+                            flex: 1;
+                            width: 100%;
+                            border-radius: 6px;
+                            overflow: hidden;
+                            background: #0f172a;
+                        }
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                        }
+                    </style>
+                    <div class="surface-box">
+                        <h3>${phrase}</h3>
+                        ${graphic ? `<div class="img-container"><img src="${graphic}" draggable="false"/></div>` : ''}
+                    </div>
+                `;
+            }
+        }
+        customElements.define('pulse-cell', PulseCellSurface);
+
+        // 3. The Canonical Grid Positioning Architecture Engine Core Runtime
+        class CanonicalGridOrchestrator {
+            constructor(viewportContainer, manifest) {
+                this.viewport = viewportContainer;
+                this.cellLayer = document.getElementById('cell-layer');
+                this.manifestPanel = document.getElementById('manifest-panel');
+                this.manifest = manifest;
+                this.maximizedCell = null;
+
+                window.addEventListener('resize', () => this.executeGeometryPhase());
+                this.viewport.addEventListener('cgp-maximize', (e) => this.processMaximizeRequest(e.detail));
+                this.viewport.addEventListener('cgp-revert', (e) => this.processRevertRequest(e.detail));
+
+                this.initializeLayoutPhase();
+            }
+
+            initializeLayoutPhase() {
+                this.cellLayer.innerHTML = '';
+                this.viewport.classList.remove('has-maximized');
+                this.maximizedCell = null;
+                this.manifest.cells.forEach(cellData => {
+                    const cell = document.createElement('pulse-cell');
+                    cell.setAttribute('id', cellData.cellId);
+                    cell.setAttribute('phrase', cellData.pulsePhrase);
+                    if(cellData.visual.promptImage) {
+                        cell.setAttribute('graphic', cellData.visual.promptImage);
+                    }
+                    
+                    // Attach structural layout parameters mapping 1:1 with data architecture
+                    cell.cgpData = cellData;
+                    this.cellLayer.appendChild(cell);
+                });
+                this.executeGeometryPhase();
+            }
+
+            updateManifest(manifest) {
+                this.manifest = manifest;
+                this.initializeLayoutPhase();
+            }
+
+            executeGeometryPhase() {
+                const surfaceW = this.viewport.clientWidth;
+                const surfaceH = this.viewport.clientHeight;
+
+                const cells = this.viewport.querySelectorAll('pulse-cell');
+                cells.forEach(cell => {
+                    if (cell === this.maximizedCell) {
+                        // Maximized Global Projection State
+                        cell.style.setProperty('--cgp-x', `0px`);
+                        cell.style.setProperty('--cgp-y', `0px`);
+                        cell.style.setProperty('--cgp-width', `${surfaceW}px`);
+                        cell.style.setProperty('--cgp-height', `${surfaceH}px`);
+                        cell.style.setProperty('--cgp-layer', `9999`);
+                    } else {
+                        // Standard CGP Proportional Multiplier State (Exactly matches Android View Engine logic)
+                        const visual = cell.cgpData.visual;
+                        const pos = visual.position;
+
+                        const stepX = surfaceW / Math.max(1, visual.grid.columns);
+                        const stepY = surfaceH / Math.max(1, visual.grid.rows);
+
+                        // Array vector matching Kotlin positional index parsing mapping bounds
+                        const renderLeft = (pos.startCell[0] - 1) * stepX;
+                        const renderTop = (pos.startCell[1] - 1) * stepY;
+                        const renderWidth = pos.span[0] * stepX;
+                        const renderHeight = pos.span[1] * stepY;
+
+                        cell.style.setProperty('--cgp-x', `${renderLeft}px`);
+                        cell.style.setProperty('--cgp-y', `${renderTop}px`);
+                        cell.style.setProperty('--cgp-width', `${renderWidth}px`);
+                        cell.style.setProperty('--cgp-height', `${renderHeight}px`);
+                        cell.style.setProperty('--cgp-layer', visual.layer);
+                    }
+                });
+
+                this.executeManifestPanelGeometry(surfaceW, surfaceH);
+            }
+
+            executeManifestPanelGeometry(surfaceW, surfaceH) {
+                const visual = manifestEditorCell.visual;
+                const pos = visual.position;
+                const stepX = surfaceW / Math.max(1, visual.grid.columns);
+                const stepY = surfaceH / Math.max(1, visual.grid.rows);
+                const renderLeft = (pos.startCell[0] - 1) * stepX;
+                const renderTop = (pos.startCell[1] - 1) * stepY;
+                const renderWidth = pos.span[0] * stepX;
+                const renderHeight = pos.span[1] * stepY;
+
+                this.manifestPanel.style.setProperty('--manifest-x', `${renderLeft}px`);
+                this.manifestPanel.style.setProperty('--manifest-y', `${renderTop}px`);
+                this.manifestPanel.style.setProperty('--manifest-width', `${renderWidth}px`);
+                this.manifestPanel.style.setProperty('--manifest-height', `${renderHeight}px`);
+            }
+
+            processMaximizeRequest(cellInstance) {
+                if (this.maximizedCell) return; // Prevent target collision state
+                this.maximizedCell = cellInstance;
+                cellInstance.classList.add('is-maximized');
+                this.viewport.classList.add('has-maximized');
+                this.executeGeometryPhase();
+            }
+
+            processRevertRequest(cellInstance) {
+                if (this.maximizedCell !== cellInstance) return;
+                cellInstance.classList.remove('is-maximized');
+                this.viewport.classList.remove('has-maximized');
+                this.maximizedCell = null;
+                this.executeGeometryPhase();
+            }
+        }
+
+        // Bootstrapping Engine Pipeline Lifecycle
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('cgp-viewport');
+            const editor = document.getElementById('manifest-editor');
+            const status = document.getElementById('manifest-status');
+            const manifestPanel = document.getElementById('manifest-panel');
+            const manifestHead = document.getElementById('manifest-head');
+            const applyButton = document.getElementById('apply-manifest');
+            const resetButton = document.getElementById('reset-manifest');
+            const initialManifestText = JSON.stringify(gridLookoutManifest, null, 2);
+            const orchestrator = new CanonicalGridOrchestrator(container, gridLookoutManifest);
+            let lastManifestHeadTap = 0;
+            let manifestHeadTouched = false;
+
+            editor.value = initialManifestText;
+
+            function setStatus(message, isError = false) {
+                status.textContent = message;
+                status.classList.toggle('error', isError);
+            }
+
+            applyButton.addEventListener('click', () => {
+                try {
+                    const nextManifest = JSON.parse(editor.value);
+                    if (!Array.isArray(nextManifest.cells)) {
+                        throw new Error('Manifest must contain a cells array.');
+                    }
+                    orchestrator.updateManifest(nextManifest);
+                    setStatus(`Applied ${nextManifest.cells.length} cell(s).`);
+                } catch (error) {
+                    setStatus(error.message, true);
+                }
+            });
+
+            resetButton.addEventListener('click', () => {
+                editor.value = initialManifestText;
+                orchestrator.updateManifest(JSON.parse(initialManifestText));
+                setStatus('Manifest reset.');
+            });
+
+            manifestHead.addEventListener('touchstart', (event) => {
+                manifestHeadTouched = true;
+                evaluateManifestHeadTap(event);
+            });
+
+            manifestHead.addEventListener('click', (event) => {
+                if (manifestHeadTouched) {
+                    manifestHeadTouched = false;
+                    return;
+                }
+                evaluateManifestHeadTap(event);
+            });
+
+            function evaluateManifestHeadTap(event) {
+                event.preventDefault();
+                const now = Date.now();
+                const tapInterval = now - lastManifestHeadTap;
+                if (tapInterval < 300 && tapInterval > 0) {
+                    manifestPanel.classList.remove('is-maximized');
+                } else {
+                    manifestPanel.classList.add('is-maximized');
+                }
+                lastManifestHeadTap = now;
+            }
+        });
+    </script>
+</body>
+</html>

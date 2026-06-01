@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GridLookout Open Source React Surface Engine</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        body, html, #react-root {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #0f172a;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        textarea, button {
+            font: inherit;
+            user-select: text;
+            -webkit-user-select: text;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="react-root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // 1. GridLookout v1.1 Compliant Manifest Modeling the GridRobe Scenario
+        const initialManifest = {
+            schemaName: "GridLookout",
+            schemaVersion: "1.1",
+            cells: [
+                {
+                    cellId: "pack_travel_bag_001",
+                    pulsePhrase: "Black Travel Bag Near Window",
+                    visual: {
+                        grid: { rows: 10, columns: 10 },
+                        layer: 1,
+                        position: { startCell: [2, 2], span: [4, 4] },
+                        promptImage: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=600&q=80"
+                    }
+                },
+                {
+                    cellId: "pack_winter_storage_002",
+                    pulsePhrase: "Heavy Coats Winter Storage Box",
+                    visual: {
+                        grid: { rows: 10, columns: 10 },
+                        layer: 2,
+                        position: { startCell: [7, 2], span: [3, 4] },
+                        promptImage: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80"
+                    }
+                },
+                {
+                    cellId: "pack_daily_essentials_003",
+                    pulsePhrase: "Daily Accessories & Wallet Valet",
+                    visual: {
+                        grid: { rows: 10, columns: 10 },
+                        layer: 3,
+                        position: { startCell: [2, 7], span: [5, 3] },
+                        promptImage: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=600&q=80"
+                    }
+                }
+            ]
+        };
+
+        const manifestEditorCell = {
+            cellId: "manifest_editor_004",
+            pulsePhrase: "Editable GridLookout Manifest",
+            visual: {
+                grid: { rows: 10, columns: 10 },
+                layer: 10,
+                position: { startCell: [7, 7], span: [4, 4] }
+            }
+        };
+
+        // 2. Passive-Receptive Grid Cell Component
+        const PulseCellSurface = ({ cell, layout, isMaximized, onGesture }) => {
+            const lastTapRef = useRef(0);
+
+            const handleTouchOrClick = (e) => {
+                e.preventDefault();
+                const now = Date.now();
+                const cooldown = now - lastTapRef.current;
+
+                if (cooldown < 300 && cooldown > 0) {
+                    onGesture("DOUBLE_TAP", cell.cellId);
+                } else {
+                    onGesture("SINGLE_TAP", cell.cellId);
+                }
+                lastTapRef.current = now;
+            };
+
+            // Calculate font constraints based on current computed geometry boundaries
+            const dynamicFontSize = Math.max(12, layout.width * 0.05);
+
+            const containerStyle = {
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: `${layout.width}px`,
+                height: `${layout.height}px`,
+                transform: `translate3d(${layout.x}px, ${layout.y}px, 0)`,
+                zIndex: isMaximized ? 9999 : cell.visual.layer,
+                padding: '8px',
+                transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                willChange: 'transform, width, height',
+                boxSizing: 'border-box'
+            };
+
+            const surfaceBoxStyle = {
+                width: '100%',
+                height: '100%',
+                backgroundColor: '#1e293b',
+                border: '1px solid #334155',
+                borderRadius: '12px',
+                padding: '16px',
+                display: 'flex',
+                flexDirection: 'column',
+                overflow: 'hidden',
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)',
+                cursor: 'pointer'
+            };
+
+            return (
+                <div 
+                    style={containerStyle} 
+                    onClick={handleTouchOrClick}
+                    onTouchStart={handleTouchOrClick}
+                >
+                    <div style={surfaceBoxStyle}>
+                        <h3 style={{
+                            color: '#f8fafc',
+                            margin: '0 0 12px 0',
+                            fontSize: `${dynamicFontSize}px`,
+                            fontWeight: 500,
+                            lineHeight: 1.2
+                        }}>
+                            {cell.pulsePhrase}
+                        </h3>
+                        {cell.visual.promptImage && (
+                            <div style={{ flex: 1, width: '100%', borderRadius: '6px', overflow: 'hidden', background: '#0f172a' }}>
+                                <img 
+                                    src={cell.visual.promptImage} 
+                                    alt={cell.pulsePhrase} 
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                    draggable={false}
+                                />
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        // 3. Main Macro CGP Geometry Orchestrator Component
+        const CanonicalGridOrchestrator = () => {
+            const initialManifestText = JSON.stringify(initialManifest, null, 2);
+            const [manifest, setManifest] = useState(initialManifest);
+            const [manifestText, setManifestText] = useState(initialManifestText);
+            const [manifestStatus, setManifestStatus] = useState("Ready.");
+            const [manifestError, setManifestError] = useState(false);
+            const [manifestMaximized, setManifestMaximized] = useState(false);
+            const [maximizedId, setMaximizedId] = useState(null);
+            const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
+            const canvasRef = useRef(null);
+            const manifestHeadTapRef = useRef(0);
+            const manifestHeadTouchedRef = useRef(false);
+
+            // Handle responsive viewport size modification parameters dynamically
+            useEffect(() => {
+                const handleResize = () => {
+                    if (canvasRef.current) {
+                        setDimensions({
+                            width: canvasRef.current.clientWidth,
+                            height: canvasRef.current.clientHeight
+                        });
+                    }
+                };
+                window.addEventListener('resize', handleResize);
+                handleResize(); // Initial measurement cycle hook
+                return () => window.removeEventListener('resize', handleResize);
+            }, []);
+
+            const handleCellGesture = (type, cellId) => {
+                if (type === "DOUBLE_TAP") {
+                    if (maximizedId === cellId) setMaximizedId(null);
+                } else if (type === "SINGLE_TAP") {
+                    if (!maximizedId) setMaximizedId(cellId);
+                }
+            };
+
+            const applyManifest = () => {
+                try {
+                    const nextManifest = JSON.parse(manifestText);
+                    if (!Array.isArray(nextManifest.cells)) {
+                        throw new Error("Manifest must contain a cells array.");
+                    }
+                    setManifest(nextManifest);
+                    setMaximizedId(null);
+                    setManifestStatus(`Applied ${nextManifest.cells.length} cell(s).`);
+                    setManifestError(false);
+                } catch (error) {
+                    setManifestStatus(error.message);
+                    setManifestError(true);
+                }
+            };
+
+            const resetManifest = () => {
+                setManifest(initialManifest);
+                setManifestText(initialManifestText);
+                setMaximizedId(null);
+                setManifestStatus("Manifest reset.");
+                setManifestError(false);
+            };
+
+            const evaluateManifestHeadTap = (event) => {
+                event.preventDefault();
+                const now = Date.now();
+                const tapInterval = now - manifestHeadTapRef.current;
+                if (tapInterval < 300 && tapInterval > 0) {
+                    setManifestMaximized(false);
+                } else {
+                    setManifestMaximized(true);
+                }
+                manifestHeadTapRef.current = now;
+            };
+
+            const handleManifestHeadTouch = (event) => {
+                manifestHeadTouchedRef.current = true;
+                evaluateManifestHeadTap(event);
+            };
+
+            const handleManifestHeadClick = (event) => {
+                if (manifestHeadTouchedRef.current) {
+                    manifestHeadTouchedRef.current = false;
+                    return;
+                }
+                evaluateManifestHeadTap(event);
+            };
+
+            // Compute Geometry Projections (Layout First, Geometry Second Logic)
+            const projectCell = (cell) => {
+                const { grid, position } = cell.visual;
+                const stepX = dimensions.width / Math.max(1, grid.columns);
+                const stepY = dimensions.height / Math.max(1, grid.rows);
+
+                return {
+                    x: (position.startCell[0] - 1) * stepX,
+                    y: (position.startCell[1] - 1) * stepY,
+                    width: position.span[0] * stepX,
+                    height: position.span[1] * stepY
+                };
+            };
+
+            const resolvedLayouts = manifest.cells.reduce((acc, cell) => {
+                if (maximizedId === cell.cellId) {
+                    acc[cell.cellId] = { x: 0, y: 0, width: dimensions.width, height: dimensions.height };
+                } else {
+                    acc[cell.cellId] = projectCell(cell);
+                }
+                return acc;
+            }, {});
+
+            const manifestPanelLayout = projectCell(manifestEditorCell);
+
+            const viewportStyle = {
+                position: 'relative',
+                width: '100%',
+                height: '100%',
+                overflow: 'hidden'
+            };
+
+            const headerStyle = {
+                position: 'absolute',
+                top: '16px',
+                left: '16px',
+                zIndex: 10000,
+                color: '#f8fafc',
+                pointerEvents: 'none',
+                textShadow: '0 2px 4px rgba(0,0,0,0.5)'
+            };
+
+            const panelStyle = {
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                transform: manifestMaximized ? 'translate3d(0, 0, 0)' : `translate3d(${manifestPanelLayout.x}px, ${manifestPanelLayout.y}px, 0)`,
+                zIndex: manifestMaximized ? 10002 : 10001,
+                width: manifestMaximized ? '100vw' : `${manifestPanelLayout.width}px`,
+                height: manifestMaximized ? '100vh' : `${manifestPanelLayout.height}px`,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '10px',
+                padding: '14px',
+                border: '1px solid rgba(148, 163, 184, 0.32)',
+                borderRadius: '10px',
+                background: 'rgba(15, 23, 42, 0.92)',
+                color: '#e2e8f0',
+                boxShadow: '0 18px 36px rgba(0, 0, 0, 0.35)',
+                overflow: 'hidden',
+                transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+            };
+
+            const editorStyle = {
+                flex: 1,
+                minHeight: 0,
+                resize: 'none',
+                border: '1px solid rgba(148, 163, 184, 0.35)',
+                borderRadius: '8px',
+                padding: '10px',
+                background: '#020617',
+                color: '#dbeafe',
+                font: '12px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace'
+            };
+
+            const buttonRowStyle = {
+                display: 'flex',
+                gap: '8px'
+            };
+
+            const buttonStyle = {
+                border: '1px solid rgba(148, 163, 184, 0.35)',
+                borderRadius: '8px',
+                padding: '8px 10px',
+                background: '#2563eb',
+                color: 'white',
+                fontWeight: 650,
+                cursor: 'pointer',
+                touchAction: 'manipulation'
+            };
+
+            return (
+                <div ref={canvasRef} style={viewportStyle}>
+                    <div style={headerStyle}>
+                        <h1 style={{ margin: 0, fontSize: '18px', fontWeight: 600, letterSpacing: '-0.025em' }}>
+                            GridRobe Virtual Wardrobe
+                        </h1>
+                        <p style={{ margin: '4px 0 0 0', fontSize: '12px', color: '#94a3b8' }}>
+                            React Engine v1.1 • Tap to Target Focus • Double Tap to Restore Context
+                        </p>
+                    </div>
+
+                    <section style={panelStyle} aria-label="Editable GridLookout manifest">
+                        <div
+                            style={{ flexShrink: 0, cursor: 'pointer', touchAction: 'manipulation' }}
+                            onClick={handleManifestHeadClick}
+                            onTouchStart={handleManifestHeadTouch}
+                        >
+                            <h2 style={{ margin: 0, fontSize: '14px', fontWeight: 650 }}>Manifest test surface</h2>
+                            <p style={{ margin: '4px 0 0 0', color: '#94a3b8', fontSize: '12px', lineHeight: 1.4 }}>
+                                Edit <code>startCell</code> or <code>span</code>. Tap here to expand, double tap to restore.
+                            </p>
+                        </div>
+                        <textarea
+                            value={manifestText}
+                            onChange={(event) => setManifestText(event.target.value)}
+                            spellCheck={false}
+                            style={editorStyle}
+                        />
+                        <div style={{ ...buttonRowStyle, flexShrink: 0 }}>
+                            <button type="button" style={buttonStyle} onClick={applyManifest}>Apply manifest</button>
+                            <button
+                                type="button"
+                                style={{ ...buttonStyle, background: '#0f172a', color: '#cbd5e1' }}
+                                onClick={resetManifest}
+                            >
+                                Reset
+                            </button>
+                        </div>
+                        <div style={{ minHeight: '18px', color: manifestError ? '#fca5a5' : '#86efac', fontSize: '12px', flexShrink: 0 }}>
+                            {manifestStatus}
+                        </div>
+                    </section>
+
+                    {/* Rendering Layer Grid Iteration */}
+                    {manifest.cells.map(cell => {
+                        const isThisMaximized = maximizedId === cell.cellId;
+                        const isAnyMaximized = maximizedId !== null;
+                        
+                        // Mask non-focused nodes when an item takes layout focus
+                        const opStyle = isAnyMaximized && !isThisMaximized ? { opacity: 0.15, pointerEvents: 'none', transition: 'opacity 0.4s' } : { transition: 'opacity 0.4s' };
+
+                        return (
+                            <div key={cell.cellId} style={opStyle}>
+                                <PulseCellSurface 
+                                    cell={cell}
+                                    layout={resolvedLayouts[cell.cellId]}
+                                    isMaximized={isThisMaximized}
+                                    onGesture={handleCellGesture}
+                                />
+                            </div>
+                        );
+                    })}
+                </div>
+            );
+        };
+
+        // Root Mounting Entrypoint
+        const root = ReactDOM.createRoot(document.getElementById('react-root'));
+        root.render(<CanonicalGridOrchestrator />);
+    </script>
+</body>
+</html>
