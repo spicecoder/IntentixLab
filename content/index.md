@@ -121,9 +121,28 @@ This makes execution transparent, traceable and bounded.
 
 ### Stability Intelligence
 
+Every situation contains constraints, relationships and possible resolutions. Intelligence is the process of discovering and maintaining those relationships while moving the situation toward a stable state.
 The result is a model of computation in which semantic coordinates are treated as first-class entities.
 
 Instead of hidden control flow operating on anonymous values, Intention Space enables execution within a stable semantic geometry where every computational step can be located, understood and reasoned about through its intent.
+
+For example:
+
+Customer has not paid invoice.
+
+This situation already contains structure:
+
+customer
+invoice
+amount
+due date
+payment status
+
+The intelligence is not created by the software.
+
+The intelligence already exists in the situation.
+
+The software merely helps navigate it.
 
 ---
 ## Explore the framework
