@@ -40,9 +40,42 @@ Traditional computation manipulates values through functions. While values may c
 
 Intention Space proposes a different invariant:
 
-> Semantic identity survives execution.
+## Semantic Identity Survives Execution
 
-Every computation occurs within a bounded Intention Space containing a fixed collection of Pulses, Intentions, Design Nodes, Signals, Objects, Fields and CPUX execution paths.
+Traditional computing operates on values and functions. Although programmers give meaningful names to variables, those semantic identities are largely lost once execution begins.
+
+For example:
+
+```text
+customerBalance = 100
+patientTemperature = 100
+```
+
+The measure is identical:
+
+```text
+100
+```
+
+Yet the computations that make sense for each are completely different. The distinction comes from the semantic identity attached to the measure, not from the number itself.
+
+Modern AI systems can infer these meanings from names and context, revealing something that software has always depended upon but rarely treats as a first-class computational entity.
+
+Intention Space makes semantic identity a runtime invariant.
+
+A fixed collection of Pulses forms the semantic basis of an Intention Space. Intentions are constructed from these Pulses and executed through CPUX (Common Paths of Understanding and Execution), Design Nodes, Signals, Objects, Fields and Field Boards.
+
+Every execution step retains a semantic coordinate:
+
+```text
+(CPUX, IC, DN, Signal)
+```
+
+rather than being identified only by memory addresses, call stacks or instruction pointers.
+
+This enables Stability Intelligence — computation in which intent, context and execution locality remain visible, traceable and bounded throughout the lifetime of the system.
+
+**In Intention Space, semantic identity survives execution.**
 
 ### Pulses
 
