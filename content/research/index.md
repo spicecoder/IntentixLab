@@ -5,6 +5,7 @@ Investigating perception-driven computation, situational reality, Stability Inte
 
 ## Topics
 
+- [Intentions as Communication Context Boundary](./intentions-as-communication-context-boundary.html)
 - [Nature Of Situational Reality](./situational-reality-note.html)
 - [Perception As Architecture](./perception-as-architecture.html)
 - [Stability Intelligence](./stabilization-intelligence-intro.html) -Extending the idea that perception precedes computation by exploring intelligence as the stabilization of situational realities through iterative semantic interaction and evolving contextual fields.
