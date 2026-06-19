@@ -24,6 +24,7 @@ const CONFIG = {
   siteTitle: 'Intention Space',
   siteTagline: 'Cognitive Execution Paths Without Hidden Logic',
   baseUrl: '/',
+  siteUrl: 'https://intentixlab.com',
 };
 
 // ─── Marked Setup with Syntax Highlighting ───────────────────────
@@ -62,6 +63,119 @@ function readTemplate(name) {
     return fs.readFileSync(filePath, 'utf-8');
   }
   return '';
+}
+
+function escapeHtmlAttr(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function absoluteUrl(urlPath = '/') {
+  if (/^https?:\/\//.test(urlPath)) return urlPath;
+  const cleanBase = CONFIG.siteUrl.replace(/\/$/, '');
+  const cleanPath = String(urlPath).startsWith('/') ? urlPath : `/${urlPath}`;
+  return `${cleanBase}${cleanPath}`;
+}
+
+function normalizeList(value) {
+  if (!value) return [];
+  return Array.isArray(value) ? value : [value];
+}
+
+function formatDate(value, separator = '-') {
+  if (!value) return '';
+  if (value instanceof Date && !Number.isNaN(value.getTime())) {
+    const yyyy = value.getUTCFullYear();
+    const mm = String(value.getUTCMonth() + 1).padStart(2, '0');
+    const dd = String(value.getUTCDate()).padStart(2, '0');
+    return [yyyy, mm, dd].join(separator);
+  }
+  return String(value).replace(/-/g, separator);
+}
+
+function renderJsonLd({ title, description, frontmatter, href }) {
+  const isResearch = String(frontmatter.source_type || '').includes('research');
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': isResearch ? 'ScholarlyArticle' : 'Article',
+    headline: title,
+    name: title,
+    description,
+    url: absoluteUrl(frontmatter.canonical || href),
+    author: frontmatter.author ? { '@type': 'Person', name: frontmatter.author } : undefined,
+    publisher: {
+      '@type': 'Organization',
+      name: 'IntentixLab',
+      url: absoluteUrl('/'),
+    },
+    datePublished: formatDate(frontmatter.date),
+    dateModified: formatDate(frontmatter.updated || frontmatter.date),
+    keywords: normalizeList(frontmatter.tags).join(', '),
+    identifier: frontmatter.doi ? `https://doi.org/${frontmatter.doi}` : undefined,
+    sameAs: frontmatter.doi ? `https://doi.org/${frontmatter.doi}` : undefined,
+    isPartOf: {
+      '@type': 'WebSite',
+      name: CONFIG.siteTitle,
+      url: absoluteUrl('/'),
+    },
+    encoding: frontmatter.pdf_url ? {
+      '@type': 'MediaObject',
+      encodingFormat: 'application/pdf',
+      contentUrl: absoluteUrl(frontmatter.pdf_url),
+    } : undefined,
+  };
+
+  Object.keys(jsonLd).forEach(key => jsonLd[key] === undefined && delete jsonLd[key]);
+  return `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>`;
+}
+
+function renderMetaTags({ title, description, frontmatter, href }) {
+  const canonicalUrl = absoluteUrl(frontmatter.canonical || href);
+  const tags = normalizeList(frontmatter.tags);
+  const meta = [
+    `<meta name="description" content="${escapeHtmlAttr(description)}">`,
+    `<meta name="robots" content="index, follow">`,
+    `<link rel="canonical" href="${escapeHtmlAttr(canonicalUrl)}">`,
+    `<meta property="og:type" content="article">`,
+    `<meta property="og:site_name" content="${escapeHtmlAttr(CONFIG.siteTitle)}">`,
+    `<meta property="og:title" content="${escapeHtmlAttr(title)}">`,
+    `<meta property="og:description" content="${escapeHtmlAttr(description)}">`,
+    `<meta property="og:url" content="${escapeHtmlAttr(canonicalUrl)}">`,
+    `<meta name="twitter:card" content="summary">`,
+    `<meta name="twitter:title" content="${escapeHtmlAttr(title)}">`,
+    `<meta name="twitter:description" content="${escapeHtmlAttr(description)}">`,
+  ];
+
+  if (tags.length) {
+    meta.push(`<meta name="keywords" content="${escapeHtmlAttr(tags.join(', '))}">`);
+    tags.forEach(tag => meta.push(`<meta property="article:tag" content="${escapeHtmlAttr(tag)}">`));
+  }
+
+  if (frontmatter.author) {
+    meta.push(`<meta name="author" content="${escapeHtmlAttr(frontmatter.author)}">`);
+    meta.push(`<meta name="citation_author" content="${escapeHtmlAttr(frontmatter.author)}">`);
+  }
+  if (frontmatter.date) {
+    meta.push(`<meta name="citation_publication_date" content="${escapeHtmlAttr(formatDate(frontmatter.date, '/'))}">`);
+  }
+  meta.push(`<meta name="citation_title" content="${escapeHtmlAttr(title)}">`);
+  meta.push(`<meta name="citation_abstract" content="${escapeHtmlAttr(description)}">`);
+  if (frontmatter.date) {
+    meta.push(`<meta name="citation_online_date" content="${escapeHtmlAttr(formatDate(frontmatter.date, '/'))}">`);
+  }
+  if (frontmatter.pdf_url) {
+    meta.push(`<meta name="citation_pdf_url" content="${escapeHtmlAttr(absoluteUrl(frontmatter.pdf_url))}">`);
+  }
+  if (frontmatter.doi) {
+    meta.push(`<meta name="citation_doi" content="${escapeHtmlAttr(frontmatter.doi)}">`);
+    meta.push(`<meta property="article:published_time" content="${escapeHtmlAttr(formatDate(frontmatter.date))}">`);
+  }
+
+  meta.push(renderJsonLd({ title, description, frontmatter, href }));
+  return meta.join('\n  ');
 }
 
 // ─── Build Navigation Tree from Directory Structure ──────────────
@@ -245,13 +359,14 @@ function processMarkdown(filePath) {
 
 // ─── Generate Full Page HTML ─────────────────────────────────────
 
-function generatePage({ title, description, htmlContent, navHtml, headerHtml, footerHtml }) {
+function generatePage({ title, description, htmlContent, navHtml, headerHtml, footerHtml, frontmatter = {}, href = '/' }) {
+  const metaTags = renderMetaTags({ title, description, frontmatter, href });
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="${description.replace(/"/g, '&quot;')}">
+  ${metaTags}
   <title>${title} — ${CONFIG.siteTitle}</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/hljs-theme.css">
@@ -311,6 +426,36 @@ function buildSearchIndex(pages) {
   }));
 }
 
+function writeSitemap(pages) {
+  const urls = pages
+    .map(page => {
+      const loc = absoluteUrl(page.frontmatter.canonical || page.href);
+      const lastmod = formatDate(page.frontmatter.updated || page.frontmatter.date);
+      return [
+        '  <url>',
+        `    <loc>${escapeHtmlAttr(loc)}</loc>`,
+        lastmod ? `    <lastmod>${escapeHtmlAttr(lastmod)}</lastmod>` : '',
+        '  </url>',
+      ].filter(Boolean).join('\n');
+    })
+    .join('\n');
+
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n` +
+    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
+  fs.writeFileSync(path.join(CONFIG.outputDir, 'sitemap.xml'), sitemap);
+}
+
+function writeRobotsTxt() {
+  const robots = [
+    'User-agent: *',
+    'Allow: /',
+    '',
+    `Sitemap: ${absoluteUrl('/sitemap.xml')}`,
+    '',
+  ].join('\n');
+  fs.writeFileSync(path.join(CONFIG.outputDir, 'robots.txt'), robots);
+}
+
 // ─── Main Build ──────────────────────────────────────────────────
 
 function build() {
@@ -339,14 +484,14 @@ function build() {
     const navHtml = renderNav(navTree, href);
 
     const pageHtml = generatePage({
-      title, description, htmlContent, navHtml, headerHtml, footerHtml,
+      title, description, htmlContent, navHtml, headerHtml, footerHtml, frontmatter, href,
     });
 
     ensureDir(path.dirname(outPath));
     fs.writeFileSync(outPath, pageHtml);
     console.log(`  ✓ ${relPath} → ${outName}`);
 
-    allPages.push({ title, href, plainText, description });
+    allPages.push({ title, href, plainText, description, frontmatter });
   }
 
   // Generate landing page if none exists
@@ -370,7 +515,7 @@ function build() {
     `;
     const landingHtml = generatePage({
       title: 'Home', description: CONFIG.siteTagline,
-      htmlContent: landingContent, navHtml: landingNavHtml, headerHtml, footerHtml,
+      htmlContent: landingContent, navHtml: landingNavHtml, headerHtml, footerHtml, href: '/',
     });
     fs.writeFileSync(landingPath, landingHtml);
     console.log(`  ✓ Generated landing page`);
@@ -388,6 +533,12 @@ function build() {
   // Copy static assets
   copyRecursive(CONFIG.staticDir, CONFIG.outputDir);
   console.log(`  ✓ Static assets copied`);
+
+  writeSitemap(allPages);
+  console.log(`  ✓ Sitemap generated`);
+
+  writeRobotsTxt();
+  console.log(`  ✓ Robots.txt generated`);
 
   console.log(`\n✅ Site built → dist/ (${allPages.length} pages)\n`);
   console.log(`   Run "npm run serve" to preview locally\n`);

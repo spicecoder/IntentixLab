@@ -5,6 +5,7 @@ Investigating perception-driven computation, situational reality, Stability Inte
 
 ## Topics
 
+- [Publications](./publications.html)
 - [Intentions as Communication Context Boundary](./intentions-as-communication-context-boundary.html)
 - [Nature Of Situational Reality](./situational-reality-note.html)
 - [Perception As Architecture](./perception-as-architecture.html)

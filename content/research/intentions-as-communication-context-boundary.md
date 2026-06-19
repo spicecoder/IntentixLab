@@ -17,8 +17,14 @@ tags:
   - Signals
   - Pulses
   - Context Boundary
+  - Trivalence
+  - LLM routing
+  - Developer-declared intention boundaries
+  - Semantic runtime architecture
 references:
   - pal-2024-human-intention-space
+pdf_url: /research/intentions-as-communication-context-boundary.pdf
+doi: 10.5281/zenodo.20761558
 ---
 
 # Intentions as Communication Context Boundary
@@ -28,7 +34,8 @@ references:
 IntentixLab, Melbourne, Australia
 
 **Draft version:** 0.1  
-**Date:** 19 June 2026
+**Date:** 19 June 2026  
+**DOI:** [10.5281/zenodo.20761558](https://doi.org/10.5281/zenodo.20761558)
 
 ---
 
@@ -37,6 +44,12 @@ IntentixLab, Melbourne, Australia
 This note proposes that **Intention** should be treated as a first-class communication anchor in Perceptive App development. It builds on the Human Intention Space framework previously introduced as a natural-language phrase driven approach for placing social computing interaction in a designed space (Pal, 2024). Human communication rarely depends on payload alone. It depends on a bounded situation in which speaker, listener, object, action, expectation, and uncertainty become mutually interpretable. This bounded situation is referred to here as **Situational Reality**. In ordinary human communication, intention acts as an anchor that constrains what a message is about, why it is being communicated, and how subsequent perception should be interpreted. Traditional software systems usually lack an explicit, standard, runtime construct for such an anchor. They pass payloads, events, routes, requests, topics, or commands, but the contextual boundary of communication often remains hidden in code, documentation, or developer convention.
 
 Intention Space addresses this gap by making **Signals** the backbone of runtime communication. A Signal carries context at two levels: first through an **Intention**, which establishes the semantic boundary of communication, and second through **Pulses**, whose phrases and trivalent values express fine-grained perceptual state. The Response area of a Pulse then carries ordinary payload data. This structure separates communicative context from payload while keeping them transportable together. The result is a computational model that more closely resembles human communication: meaning is not carried by raw data alone, but by data situated inside an intentional frame.
+
+---
+
+## Keywords
+
+Intention Space; Perceptive Apps; Situational Reality; communication context boundary; Signals; Pulses; Trivalence; LLM routing; developer-declared intention boundaries; semantic runtime architecture
 
 ---
 
@@ -228,6 +241,49 @@ The payload representation is useful, but it does not explicitly distinguish com
 
 ## 7. Relation to Current Technical Work
 
+## 7. Developer Actions as Natural Intention Boundaries
+
+Normal software development already creates intention boundaries. A developer names a route, writes a function, defines a form, creates a workflow step, declares a message topic, designs a screen, or exposes an API operation. Each of these acts is not merely technical. It is an act of bounded meaning.
+
+For example:
+
+```text
+POST /appointments/cancel
+```
+
+does not merely identify an HTTP path. It expresses a communicative boundary: some participant is trying to cancel an appointment. Likewise:
+
+```text
+submitInsuranceVerification()
+```
+
+already tells us that the relevant communication is not generic data submission, but insurance verification.
+
+Traditional software uses these boundaries operationally, but does not usually preserve them as explicit semantic runtime objects. They remain scattered across names, routes, code structure, and documentation. This is precisely where Intention Space gains leverage.
+
+By recognizing these normal developer actions as **natural intention boundaries**, we can keep an LLM on a bounded trail:
+
+```text
+developer-declared boundary
+  -> allowed Intention
+  -> allowed input Signal
+  -> required Pulses
+  -> deterministic validator
+  -> DN execution
+```
+
+The LLM is not asked to invent application meaning. It is asked to identify which declared communicative boundary the user's expression belongs to, fill the required Pulses, or report that the situation is outside the declared boundary.
+
+This reframes the role of the LLM:
+
+> The LLM is not the application actor; it is an Intention Receptor operating inside boundaries already created by developer action.
+
+This is a major practical advantage. It turns the developer's ordinary design work into a semantic containment structure for AI. Routes, functions, screens, forms, and API operations become more than implementation artifacts. They become declared tracks through which human language can be safely matched into executable Intention Space.
+
+---
+
+## 8. Relation to Current Technical Work
+
 Several current technical movements point toward the same general concern: software systems need better ways to carry context.
 
 The OpenAPI Specification standardizes machine-readable descriptions of HTTP APIs so that humans and computers can understand service capabilities without inspecting source code (OpenAPI Initiative, 2025). Model Context Protocol standardizes how AI applications connect to external systems, tools, and data sources (Model Context Protocol, 2026). Intent-based networking uses intents to express desired outcomes or policies rather than low-level device commands (Mehmood et al., 2023). Recent context engineering work for large language models treats inference-time context as a formal design object rather than an incidental prompt (Mei et al., 2025).
@@ -247,7 +303,7 @@ This makes Intention Space particularly suited to Perceptive Apps, where the app
 
 ---
 
-## 8. A Perceptive App Example
+## 9. A Perceptive App Example
 
 Imagine a care-home application that coordinates morning medication.
 
@@ -296,7 +352,7 @@ The payload overlaps, but the communication boundary has changed. This is exactl
 
 ---
 
-## 9. Design Implications
+## 10. Design Implications
 
 The approach leads to several design principles for Perceptive Apps:
 
@@ -305,13 +361,14 @@ The approach leads to several design principles for Perceptive Apps:
 3. **Represent uncertainty directly.** Unknown state should be expressed as `UN`, not smuggled through nulls, missing fields, or false defaults.
 4. **Use Signals as semantic boundaries.** Design Nodes should absorb and emit Signals, preserving communication context across execution.
 5. **Treat payload as situated.** Payload values become meaningful only inside an Intention and Pulse configuration.
-6. **Prefer bounded interpretation.** An LLM or router should select among declared input Signals and fill required Pulses, not invent unbounded application meaning.
+6. **Recognize developer-declared boundaries.** Routes, functions, forms, screens, workflow states, and API operations should be treated as natural intention boundaries.
+7. **Prefer bounded interpretation.** An LLM or router should select among declared input Signals and fill required Pulses, not invent unbounded application meaning.
 
 These principles make the application more inspectable because the context that drives execution becomes visible and transportable.
 
 ---
 
-## 10. Contribution
+## 11. Contribution
 
 The contribution of this note is not the claim that intention matters in human communication; that is already supported by a broad intellectual tradition. The contribution is the architectural proposal that Perceptive Apps should make intention an explicit runtime construct.
 
@@ -322,12 +379,13 @@ In this proposal:
 - **Pulse** is the atom of perceptual context.
 - **Trivalence** preserves presence, absence, and unresolved state.
 - **Response** carries ordinary payload inside an explicit context.
+- **Developer-declared boundaries** provide natural tracks for keeping LLM interpretation inside declared application meaning.
 
 This shifts application development from payload-first design to intention-bounded communication design.
 
 ---
 
-## 11. Conclusion
+## 12. Conclusion
 
 Human beings communicate through situated intention. We do not merely exchange payloads; we establish a context boundary, recognize relevant perceptions inside it, resolve uncertainty, and act. Traditional software often hides this boundary inside code and convention. Intention Space makes it explicit.
 
