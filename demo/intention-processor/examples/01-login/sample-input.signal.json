@@ -1,0 +1,9 @@
+{
+  "signalId": "S_login_attempt",
+  "intentionId": "I_authenticate_user",
+  "pulses": [
+    { "phrase": "_perception_mode", "tv": "Y", "responses": ["act"] },
+    { "phrase": "username", "tv": "Y", "responses": ["pronab"] },
+    { "phrase": "password", "tv": "Y", "responses": ["intentix"] }
+  ]
+}

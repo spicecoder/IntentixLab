@@ -1,0 +1,16 @@
+{
+  "signalId": "S_generate_histogram",
+  "intentionId": "I_generate_histogram",
+  "pulses": [
+    { "phrase": "_perception_mode", "tv": "Y", "responses": ["act"] },
+    {
+      "phrase": "histogram_data",
+      "tv": "Y",
+      "responses": [
+        ["META", "value"],
+        ["10"], ["14"], ["15"], ["18"], ["18"], ["20"], ["22"], ["24"], ["26"], ["30"]
+      ]
+    },
+    { "phrase": "chart_title", "tv": "Y", "responses": ["Demo Histogram"] }
+  ]
+}

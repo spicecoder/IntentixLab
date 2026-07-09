@@ -1,0 +1,30 @@
+{
+  "name": "intentixlab-intention-processor-demo",
+  "version": "0.3.0",
+  "description": "Public Intention Processor demo for Signal-bounded Design Node generation.",
+  "type": "module",
+  "bin": {
+    "intention-demo": "./bin/intention-demo.js"
+  },
+  "scripts": {
+    "check:ollama": "node bin/intention-demo.js check-ollama",
+    "generate:login:offline": "LLM_PROVIDER=none node bin/intention-demo.js generate login",
+    "generate:login": "node bin/intention-demo.js generate login",
+    "test:login": "node bin/intention-demo.js test login",
+    "generate:histogram": "node bin/intention-demo.js generate histogram",
+    "generate:histogram:offline": "LLM_PROVIDER=none node bin/intention-demo.js generate histogram",
+    "test:histogram": "node bin/intention-demo.js test histogram",
+    "compose:authenticated-histogram": "node bin/intention-demo.js compose authenticated-histogram",
+    "demo:recording": "node bin/intention-demo.js demo-recording",
+    "clean": "rm -rf generated/artifacts/*.svg registry/dn-registry.json",
+    "record:s7": "node scripts/record-s7-login.js",
+    "record:s8": "node scripts/record-s8-histogram.js",
+    "record:s9": "node scripts/record-s9-composition.js",
+    "record:login": "node scripts/record-s7-login.js",
+    "record:histogram": "node scripts/record-s8-histogram.js",
+    "record:composition": "node scripts/record-s9-composition.js"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

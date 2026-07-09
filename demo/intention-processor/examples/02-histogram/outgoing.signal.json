@@ -1,0 +1,8 @@
+{
+  "signalId": "S_histogram_generated",
+  "intentionId": "I_histogram_generated",
+  "pulses": [
+    { "phrase": "histogram_svg", "tv": "N", "responses": [] },
+    { "phrase": "histogram_summary", "tv": "N", "responses": [] }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "signalId": "S_user_authenticated",
+  "intentionId": "I_user_authenticated",
+  "pulses": [
+    { "phrase": "authenticated", "tv": "N", "responses": [] },
+    { "phrase": "user_id", "tv": "N", "responses": [] },
+    { "phrase": "user_message", "tv": "N", "responses": [] }
+  ]
+}

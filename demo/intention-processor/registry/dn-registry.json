@@ -1,0 +1,24 @@
+{
+  "dns": [
+    {
+      "dnName": "DN_Login",
+      "kind": "login",
+      "provider": "fallback-after-fallback",
+      "inputSignal": "S_login_attempt",
+      "outputSignal": "S_user_authenticated",
+      "source": "generated/dns/DN_Login.js",
+      "inferenceSpec": "generated/inference-specifications/DN_Login.md",
+      "registeredAt": "2026-07-09T08:33:01.762Z"
+    },
+    {
+      "dnName": "DN_Histogram",
+      "kind": "histogram",
+      "provider": "fallback-after-fallback",
+      "inputSignal": "S_generate_histogram",
+      "outputSignal": "S_histogram_generated",
+      "source": "generated/dns/DN_Histogram.js",
+      "inferenceSpec": "generated/inference-specifications/DN_Histogram.md",
+      "registeredAt": "2026-07-09T08:34:02.532Z"
+    }
+  ]
+}

@@ -153,6 +153,7 @@ The software merely helps navigate it.
 - [Research](/research/index.html)
 - [Intention Geometry Rendering](/intention-geometry-rendering/index.html)
 - [Situation Reality and Pulses](/situational_reality_analysis_prompts/index.html) 
+- [Demo](/demo/intention-processor.html)
 - [Social Awareness](social-awareness/index.html)
 - [Tools](/tools/index.html)
 - [Contact IntentixLab](contactIntentixlab/index.html)
