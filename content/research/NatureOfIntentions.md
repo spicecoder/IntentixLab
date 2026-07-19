@@ -1,5 +1,5 @@
 ---
-title: "Bounded Computation and Open-Ended Intention"
+title: "Nature Of Intentions Bounded Computation and Open-Ended Intention"
 subtitle: "A Research Note on Intention Space, CPUX Decidability, Turing Undecidability, Gödelian Extension, and Human–AI Agency"
 author: "Pronab Pal"
 organisation: "Intentix Lab / Keybyte Systems Australia"
@@ -147,7 +147,8 @@ SyncLogic computes:
 
 \[
 Decision(CX,F,\Sigma)
-ightarrow
+
+ightarrow
 \{activate, skip, continue, prehalt, halt\}.
 \]
 
