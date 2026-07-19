@@ -15,3 +15,4 @@ Investigating perception-driven computation, situational reality, Stability Inte
 - [Structural Unity-e-pi](./structural-unity-e-pi.html)
 - [AI identity and Consciousness](./ai-identity-consciousness.html)
 - [AutoInteraction](./autointeraction.html)
+- [NatureOfIntentions](./NatureOfIntentions.html)
