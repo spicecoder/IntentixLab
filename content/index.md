@@ -9,6 +9,8 @@ description: Cognitive Execution Paths Without Hidden Logic
 
 A research framework exploring how perception and intention can become first-class computational constructs — eliminating hidden control flow through declarative, data-driven design.
 
+Intention Space provides the computational architecture in which explicitly represented intentions, Signals and Pulses determine when bounded computations may participate in a Common Path of Understanding and Execution.
+
 ---
 
 ## Vision
