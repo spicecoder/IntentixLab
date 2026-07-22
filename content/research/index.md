@@ -16,3 +16,4 @@ Investigating perception-driven computation, situational reality, Stability Inte
 - [AI identity and Consciousness](./ai-identity-consciousness.html)
 - [AutoInteraction](./autointeraction.html)
 - [NatureOfIntentions](./NatureOfIntentions.html)
+- [2 Intention Boundary and Back propagation ](./2IntentionBoundaryAndBackPropagation.html)
