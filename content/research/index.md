@@ -17,3 +17,4 @@ Investigating perception-driven computation, situational reality, Stability Inte
 - [AutoInteraction](./autointeraction.html)
 - [NatureOfIntentions](./NatureOfIntentions.html)
 - [2 Intention Boundary and Back propagation ](./2IntentionBoundaryAndBackPropagation.html)
+- [IPTP-SHANNON-FORMALIZATION](./iptp-shannon-formalization.html)
