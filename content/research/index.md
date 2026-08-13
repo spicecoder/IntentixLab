@@ -18,4 +18,5 @@ Investigating perception-driven computation, situational reality, Stability Inte
 - [NatureOfIntentions](./NatureOfIntentions.html)
 - [2 Intention Boundary and Back propagation ](./2IntentionBoundaryAndBackPropagation.html)
 - [IPTP-SHANNON-FORMALIZATION](./iptp-shannon-formalization.html)
-- [CDA-intention-space-execution-model](./cda-intention-space-execution-model.html)
+- [CDA-intention-space-execution-model](./cda-intention-space-execution-model.html) 
+- [LPM-tension-resolution-design-research](./lpm-tension-resolution-design-research.html)
