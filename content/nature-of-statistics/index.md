@@ -8,7 +8,7 @@ The Nature of Statistics is not a manual. It is a philosophy of measurement for 
 
 ## Topics
 
-- [The Experiment](./prelude_the_experiment.html)
+- [The Experiment](./An_experiment.html)
 - [Invisible Frame](./chapter_invisible_frame.html)
 
 - [Parliament of Measures](./parliament_of_measures.html)
