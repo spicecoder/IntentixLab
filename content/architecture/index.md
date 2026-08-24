@@ -8,3 +8,4 @@ The internal structure of the framework and how different components interact.
 - [CPUX engine on the Client](./cpux-client-architecture.html)
 - [CGP Canonical Grid Positioning](./CGP_CanonicalGridPositioning.html)
 - [SOLID As Pulse Store](./solid_as_pulsestore.html)
+- [CDA Context Dynamic Algebra](./context-dynamic-algebra-cda.html)
