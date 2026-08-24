@@ -1,5 +1,5 @@
 ---
-title: "Context Dynamic Algebra: A Closed Algebraic Model of Software Requirement — Through Three Faculties of Attention: Point, Encompass & Resolve"
+title: "Context Dynamic Algebra:  Through Three Faculties of Attention: Point, Encompass & Resolve"
 author: "Pronab Pal"
 organisation: "Keybyte Systems / Intentix Lab"
 location: "Melbourne, Victoria, Australia"
@@ -9,11 +9,11 @@ status: "Current manuscript"
 
 # Context Dynamic Algebra: A Closed Algebraic Model of Software Requirement — Through Three Faculties of Attention: Point, Encompass & Resolve
 
-Pronab Pala,*
+Pronab Pal,*
 
 a Keybyte Systems / Intentix Lab, Melbourne, Victoria, Australia
 
-* Corresponding author. Email: [author to supply]
+* Corresponding author. Email: [pronab@keybytesystems.com]
 
 Present address: as above.
 
