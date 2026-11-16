@@ -276,3 +276,15 @@ Consent Before Intrusion
 Technology with Mutual Regard
 Quiet Spaces for Human Growth
 Respectful Digital Society
+## Google Tag Manager
+
+The shared HTML generator in `scripts/build.js` installs container
+`GTM-M5PWCR6P` on every generated Markdown page and the homepage, with the
+script in `<head>` and the noscript fallback immediately after `<body>`.
+Run `npm run build` to regenerate the site; do not edit generated `dist/` pages.
+
+For Google Analytics collection, configure a Google tag in this container using
+this site's GA4 measurement ID (`G-...`), use the Initialization – All Pages
+trigger, verify it in Tag Manager Preview / Tag Assistant, and publish the
+container. Installing the container alone does not configure Analytics.
+After deployment, check the GA4 Realtime report while visiting the live site.
